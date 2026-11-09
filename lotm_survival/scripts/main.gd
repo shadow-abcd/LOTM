@@ -4,7 +4,7 @@ extends Node
 const SCREENS := {
 	"title": "res://scripts/screens/title.gd",
 	"study": "res://scripts/screens/study.gd",
-	"run": "res://scripts/run/run.gd",
+	"run": "res://scripts/run/run_aim.gd",
 }
 
 var current: Node = null
