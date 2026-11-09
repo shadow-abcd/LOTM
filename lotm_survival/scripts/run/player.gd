@@ -1,10 +1,9 @@
 extends Node2D
 ## The player body. Movement/dash/hurt state; the Run script drives tick().
+## The visible character is now a fully 3D model (character3d.gd) rendered live
+## through a transparent viewport; movement, hitbox and stats are unchanged.
 
-## The original player sprites are about 128 pixels tall. Custom character art
-## (any resolution) is scaled to this fixed on-screen height, so replacements
-## for player_<pathway>.png always render at the classic size.
-const SPRITE_HEIGHT := 128.0
+const Character3D = preload("res://scripts/run/character3d.gd")
 
 var hp = 100.0
 var max_hp = 100.0
@@ -21,7 +20,7 @@ var slow_mult = 1.0
 var face = 1.0
 var moving = false
 var _t = 0.0
-var sprite: Sprite2D
+var char3d = null
 var glow: Sprite2D
 
 func setup(pid: String, accent: Color) -> void:
@@ -39,18 +38,9 @@ func setup(pid: String, accent: Color) -> void:
 	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	glow.material = m
 	add_child(glow)
-	sprite = Sprite2D.new()
-	var t: Texture2D = UI.tex("res://assets/sprites/player_%s.png" % pid)
-	if t == null:
-		t = UI.tex("res://assets/sprites/actors/knight.svg")
-	sprite.texture = t
-	if t != null:
-		sprite.offset = Vector2(0, -t.get_height() / 2.0 + 6)
-		# Normalize to a fixed on-screen height: any custom character art at
-		# any resolution renders at the classic player size.
-		var scl: float = SPRITE_HEIGHT / float(t.get_height())
-		sprite.scale = Vector2(scl, scl)
-	add_child(sprite)
+	char3d = Character3D.new()
+	char3d.setup(pid, accent)
+	add_child(char3d)
 
 func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 	_t += delta
@@ -69,12 +59,14 @@ func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 			face = signf(dir.x)
 	else:
 		stationary += delta
-	sprite.flip_h = face < 0.0
-	sprite.position.y = -absf(sin(_t * 11.0)) * 3.0 if moving else sin(_t * 2.0) * 1.2
+	if char3d != null:
+		char3d.flip_h = face < 0.0
+		char3d.position.y = -absf(sin(_t * 11.0)) * 3.0 if moving else sin(_t * 2.0) * 1.2
 	var a = 1.0
 	if invuln > 0.0:
 		a = 0.55 + 0.25 * sin(_t * 40.0)
-	sprite.modulate = Color(1.0, 1.0 - flash * 0.7, 1.0 - flash * 0.7, a)
+	if char3d != null:
+		char3d.modulate = Color(1.0, 1.0 - flash * 0.7, 1.0 - flash * 0.7, a)
 	glow.modulate.a = 0.28 + 0.1 * sin(_t * 3.0)
 
 func try_dash(dir: Vector2, cd: float, duration: float) -> bool:
