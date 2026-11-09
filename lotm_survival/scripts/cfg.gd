@@ -7,8 +7,8 @@ const PATH := "user://settings.cfg"
 const DEFAULTS := {
 	"master": 0.85, "music": 0.7, "sfx": 0.9, "ambience": 0.6,
 	"fullscreen": false, "vsync": true, "screen_shake": 1.0, "particles": 2, "damage_numbers": true,
-	"show_fps": false, "ui_scale": 1.0, "touch_controls": false, "auto_aim": true,
-	"open_gates": false, "difficulty": 1, "pause_on_focus_loss": true, "vibration": true,
+	"show_fps": false, "ui_scale": 1.0, "touch_controls": false, "open_gates": false,
+	"difficulty": 1, "pause_on_focus_loss": true, "vibration": true,
 	"reduce_flashes": false, "high_contrast": false, "big_text": false, "colorblind": false,
 }
 ## action -> [label, icon, default physical keycode]
