@@ -124,7 +124,6 @@ func _controls() -> void:
 	_section("Devices")
 	_row("joystick", "Touch controls", UI.toggle("", "", bool(Cfg.get_v("touch_controls")), func(on): Cfg.set_v("touch_controls", on)), "On-screen stick and buttons")
 	_row("vibration", "Vibration", UI.toggle("", "", bool(Cfg.get_v("vibration")), func(on): Cfg.set_v("vibration", on)))
-	_row("compass", "Auto-aim", UI.toggle("", "", bool(Cfg.get_v("auto_aim")), func(on): Cfg.set_v("auto_aim", on)))
 	_section("Keyboard — click a key to rebind")
 	for a in Cfg.ACTIONS.keys():
 		var b = Button.new()
