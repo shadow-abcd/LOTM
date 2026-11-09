@@ -22,6 +22,34 @@ const BEATS := {
 			{"id": "break", "text": "Break the mirror — it never returns: +1 Fortune rank and +1 Characteristic, and no mirror will offer again", "flag": "mirror_broken"},
 		],
 	},
+	"nighthawk": {
+		"name": "The Nighthawk's Offer",
+		"req": {"runs": 3, "kills": 200},
+		"text": "A Nighthawk leaves a sealed envelope under your door: a job, and a name. The City of Silver's wanted list grows longer every night.\n\nThe letter is signed with an eye that follows you around the room.",
+		"options": [
+			{"id": "accept", "text": "Work for the Nighthawks — descents become Bounty runs (elite-heavy, double Coins), but Church reputation is frozen", "flag": "nighthawk_true"},
+			{"id": "church", "text": "Forward it to the Church — descents become Confession runs (holy enemy variants, more Characteristics), but the Nighthawks go quiet", "flag": "church_true"},
+			{"id": "both", "text": "Play double agent — both faction shops open at the Auction, but every descent costs 20 Coins entry", "flag": "double_agent"},
+		],
+	},
+	"chair": {
+		"name": "The Chair",
+		"req": {"seq_reached": 5, "runs": 5},
+		"text": "A chair is drawn up to your Study table while you sleep. On it sits a tarot card: The Hanged Man, inverted.\n\nYour deepest Sequence has been noticed by something higher.",
+		"options": [
+			{"id": "sit", "text": "Sit in the chair — unlock the Ritual of the Hanged Man at the Altar (sacrifice all reagents for a ★4 ability draft at run start), but Characteristics cost +1 during descents", "flag": "chair_sit"},
+			{"id": "burn", "text": "Burn the card — the visitation never repeats, but gain 2 Characteristics now", "flag": "chair_burned"},
+		],
+	},
+	"mentor_debt": {
+		"name": "Mentor's Debt",
+		"req": {"runs": 6},
+		"text": "Beyond-the-Fog, a former mentor sends word: they owe a debt to your dead master, and they want YOU to collect it.\n\nThe fee is simple — one act of sabotage against the Church's supply line.",
+		"options": [
+			{"id": "collect", "text": "Collect the debt — gain the Mentor relationship at Loyal, +300 Coins, but Church reputation drops to Hostile", "flag": "mentor_loyal"},
+			{"id": "pay", "text": "Pay it yourself — keep the Church's trust (+1 Church rank), but lose half your Coins", "flag": "church_paid"},
+		],
+	},
 }
 
 func _init() -> void:
@@ -30,7 +58,7 @@ func _init() -> void:
 
 func build() -> void:
 	body.add_child(UI.wrap_label("Every choice in the Chronicle is permanent. Nothing here can be undone, resold, or refunded. Choose who you are becoming.", 15, UI.GOLD))
-	for beat_id in BEATS.keys():
+	for beat_id in BEATS:
 		var beat: Dictionary = BEATS[beat_id]
 		if _chosen(beat_id):
 			continue
