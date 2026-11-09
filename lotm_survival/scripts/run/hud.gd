@@ -246,9 +246,8 @@ func _input(e: InputEvent) -> void:
 func set_place(place: Dictionary) -> void:
 	_accent = Color(str(place.get("accent", "#ffffff")))
 	_place_lbl.text = str(place.get("name", ""))
-	var hz = str(place.get("hazard", {}).get("id", ""))
-	_dark.visible = hz == "darkness"
-	_water.visible = hz == "rising_water"
+	# Lantern Field darkness/fog overlay removed — pure visual, no gameplay logic depends on it
+	_dark.visible = false
 
 func announce(title: String, sub: String = "") -> void:
 	_ann_title.text = title
