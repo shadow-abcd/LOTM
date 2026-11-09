@@ -54,14 +54,14 @@ func _level_note(lv: int) -> Array:
 	for s in STEP_SEQ.keys():
 		if lv == int(STEP_SEQ[s]):
 			var gate: bool = s in DB.GATES
-			notes.append(["Seq %d · %s%s" % [s, DB.title_for(Store.current_pathway(), s), " — BOSS GATE" if gate else ""], gate])
+			notes.append(["Seq %d · %s%s" % [s, DB.title_for(Store.current_pathway(), s), " — BOSS GATE" if gate else ""], gate)
 	if notes.is_empty():
 		return []
 	return notes
 
 func _level_chip(lv: int) -> Control:
 	var p = PanelContainer.new()
-	p.add_theme_stylebox_override("panel", UI.flat(Color(" #17131f" if false else "#17131f"), Color("#3a3046"), 1, 8, 6))
+	p.add_theme_stylebox_override("panel", UI.flat(Color("#17131f"), Color("#3a3046"), 1, 8, 6))
 	var v = VBoxContainer.new()
 	v.add_theme_constant_override("separation", 1)
 	var is_milestone: bool = lv % 10 == 0
