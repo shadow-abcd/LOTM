@@ -1,0 +1,86 @@
+[
+ {
+  "id": "cinders",
+  "name": "Charm of Cinders",
+  "pathway": null,
+  "pathwayName": "Any pathway",
+  "rarity": "Common",
+  "glyph": "flame",
+  "color": "#daaa85",
+  "cooldown": 45,
+  "description": "Raise a burning wall ahead for four seconds.",
+  "source": "Available in your first Study."
+ },
+ {
+  "id": "silence",
+  "name": "Charm of Silence",
+  "pathway": null,
+  "pathwayName": "Any pathway",
+  "rarity": "Uncommon",
+  "glyph": "scroll",
+  "color": "#b7cdb0",
+  "cooldown": 60,
+  "description": "Interrupt hazards and silence enemy abilities for three seconds.",
+  "source": "Found at a Sequence gate or a rare elite."
+ },
+ {
+  "id": "mirrors",
+  "name": "Charm of Mirrors",
+  "pathway": null,
+  "pathwayName": "Any pathway",
+  "rarity": "Rare",
+  "glyph": "eye",
+  "color": "#c6acd1",
+  "cooldown": 75,
+  "description": "Repeat your last ability cast at half damage.",
+  "source": "Found at a Sequence gate or a rare elite."
+ },
+ {
+  "id": "ward",
+  "name": "Charm of Shelter",
+  "pathway": null,
+  "pathwayName": "Any pathway",
+  "rarity": "Common",
+  "glyph": "shield",
+  "color": "#a7c6b2",
+  "cooldown": 60,
+  "description": "Become invulnerable for two seconds.",
+  "source": "Available in your first Study."
+ },
+ {
+  "id": "tallow_vial",
+  "name": "Vial of Tallow",
+  "rarity": "Common",
+  "glyph": "potion",
+  "color": "#d8b070",
+  "cooldown": 40,
+  "description": "Drink the wax-warm tallow. Restore 35 vitality.",
+  "source": "Common enemies, global pool.",
+  "pathway": null,
+  "pathwayName": "Any pathway"
+ },
+ {
+  "id": "gale",
+  "name": "Charm of the Slow Gale",
+  "rarity": "Uncommon",
+  "glyph": "wind",
+  "color": "#9ab8c8",
+  "cooldown": 50,
+  "description": "Every enemy moves at 40% speed for five seconds.",
+  "source": "Elites, global pool.",
+  "pathway": null,
+  "pathwayName": "Any pathway"
+ },
+ {
+  "id": "second_sight",
+  "name": "Mirror of Second Sight",
+  "rarity": "Rare",
+  "glyph": "eye",
+  "color": "#b8a0e0",
+  "cooldown": 70,
+  "description": "Mark every enemy on screen and hold them still for one second.",
+  "source": "Elites and altars, global pool.",
+  "pathway": null,
+  "pathwayName": "Any pathway"
+ }
+]

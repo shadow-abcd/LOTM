@@ -1,0 +1,152 @@
+[
+ {
+  "id": "cinder_wold",
+  "name": "The Cinder Wold",
+  "roman": "I",
+  "line": "The forest that burned standing and never fell. Ash in the shape of trees, holding until touched.",
+  "backstory": "A war was fought here. Then a second war was fought on the same ground, and the second one did not bury anyone. The fire came after and went out slowly. What is left is a wood of standing ash — trunk, branch, crown, all present, all grey, all waiting for a hand on them. The wood is silent because ash does not rustle.",
+  "landmark": "A bell tower with no bell. The frame is intact, the bell is a hole in the shape of a bell.",
+  "hazard": {
+   "id": "ash_drift",
+   "name": "Ash Drift",
+   "description": "Every 40 seconds a drift crosses the arena at 90 px/s. Crossing it costs 20% movement speed for 3 seconds and leaves a grey footprint trail."
+  },
+  "uniqueEnemy": "standing_ash",
+  "yields": [
+   7,
+   6,
+   5
+  ],
+  "pathways": [
+   "dawnbringer"
+  ],
+  "ambient": "Ash falls upward at 8 px/s.",
+  "paletteLead": "EMBER",
+  "accent": "#E0613A"
+ },
+ {
+  "id": "drowned_stair",
+  "name": "The Drowned Stair",
+  "roman": "II",
+  "line": "A staircase going down into water that is deeper than the water is deep. Something is climbing it.",
+  "backstory": "The stair was built to a landing that used to be a room. The room is now under twenty metres of water and the stair still goes down past it. Divers went first, then soldiers, then people who were told it was a way out. All of them went down. The water is warm and it is moving against the current.",
+  "landmark": "The top landing — a door standing open onto a brick wall. The door is normal in every respect except that it opens onto nothing.",
+  "hazard": {
+   "id": "rising_water",
+   "name": "Rising Water",
+   "description": "The water rises 4 px/s for the entire run in this Place. The arena shrinks beneath you."
+  },
+  "uniqueEnemy": "slow_ascender",
+  "yields": [
+   5,
+   4,
+   3
+  ],
+  "pathways": [
+   "dawnbringer"
+  ],
+  "ambient": "Water laps at the bottom third of the screen, constantly, at 1 px amplitude.",
+  "paletteLead": "RIME",
+  "accent": "#6FD3E8"
+ },
+ {
+  "id": "salt_seminary",
+  "name": "The Salt Seminary",
+  "roman": "III",
+  "line": "A school buried in salt. The salt kept the lesson.",
+  "backstory": "The seminary taught one subject and it was not theology. When the salt came — nobody agrees whether it was a flood or a punishment — it filled the building to the second floor and stopped. Everything under the salt is exactly as it was. The desks are occupied. The chalkboards are legible. The lesson is still in progress.",
+  "landmark": "A lecture hall, every desk occupied by a figure made of salt. None of them are seated correctly.",
+  "hazard": {
+   "id": "salt_blindness",
+   "name": "Salt Blindness",
+   "description": "Standing in salt for 2 seconds reduces Reveal by 50% until you leave it."
+  },
+  "uniqueEnemy": "reciting_choir",
+  "yields": [
+   6,
+   5,
+   4
+  ],
+  "pathways": [
+   "wanderer"
+  ],
+  "ambient": "Salt grains slide off every surface at 2 px/s, continuously.",
+  "paletteLead": "GLOOM",
+  "accent": "#5E3A78"
+ },
+ {
+  "id": "glass_verge",
+  "name": "The Glass Verge",
+  "roman": "IV",
+  "line": "A plain of shattered mirror where the ground reflects a sky that is not overhead.",
+  "backstory": "There was a mirror here, and it was large, and the story of who broke it has eleven versions. The plain is what is left: a floor of shards, none smaller than a hand, all of them reflecting the same wrong sky. The sky in the reflection has stars. It is daytime.",
+  "landmark": "A full-length standing mirror, upright, intact, bolted to the ground. Its reflection is the player's back, always, from any angle.",
+  "hazard": {
+   "id": "reflections",
+   "name": "Reflections",
+   "description": "Your own shard-shadows deal 15% of your damage back to you if you attack within 80 px of one."
+  },
+  "uniqueEnemy": "reflection_that_stays",
+  "yields": [
+   7,
+   6,
+   5
+  ],
+  "pathways": [
+   "hollow_seer"
+  ],
+  "ambient": "The floor reflects a sky containing two slow-moving stars.",
+  "paletteLead": "VENOM",
+  "accent": "#9BD94F"
+ },
+ {
+  "id": "slow_orchard",
+  "name": "The Slow Orchard",
+  "roman": "V",
+  "line": "Time runs at seven-tenths here. The fruit ripens while you watch and rots before you reach it.",
+  "backstory": "An orchard planted by someone who expected to be alive when it fruited. It fruited. Nobody came. Now it fruits constantly — a tree will show blossom, green, ripe, and rot in the time it takes to walk past it. The owner's chair is still in the middle, grown around by the trunk of the oldest tree.",
+  "landmark": "A wooden chair with a tree grown through it. The chair is intact. The tree went around it.",
+  "hazard": {
+   "id": "slow_cooldowns",
+   "name": "Seven-Tenths Time",
+   "description": "All cooldowns tick 30% slower in this Place. Nothing else. That is enough."
+  },
+  "uniqueEnemy": "grafter",
+  "yields": [
+   3,
+   2,
+   1
+  ],
+  "pathways": [
+   "wanderer"
+  ],
+  "ambient": "Fruit falls and rots mid-air, at 0.7x speed.",
+  "paletteLead": "VENOM",
+  "accent": "#9BD94F"
+ },
+ {
+  "id": "lantern_field",
+  "name": "The Lantern Field",
+  "roman": "VI",
+  "line": "A field of hanging lanterns. Each lantern is a person who has not gone out yet. One of them is still walking around lighting more.",
+  "backstory": "Nobody built the field. The lanterns are hung from poles that are not poles and they are lit by something that is not fire. Counting them produces different numbers on different nights. The only constant is the Lamplighter, who is patient, and who has not finished.",
+  "landmark": "A ladder leaning on nothing. It is upright, it is stable, and there is nothing under it and nothing behind it.",
+  "hazard": {
+   "id": "darkness",
+   "name": "Darkness",
+   "description": "Outside a lantern's radius the screen is 85% dark. Enemies spawn only in darkness and are invisible until they enter light."
+  },
+  "uniqueEnemy": "lamplighter",
+  "yields": [
+   0
+  ],
+  "pathways": [
+   "dawnbringer",
+   "wanderer",
+   "hollow_seer"
+  ],
+  "ambient": "Lanterns sway at 2 degrees per second, all in different phases, none in sync.",
+  "paletteLead": "RADIANCE",
+  "accent": "#F2C14E"
+ }
+]

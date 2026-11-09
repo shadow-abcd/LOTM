@@ -1,0 +1,278 @@
+{
+ "dawnbringer": [
+  [
+   "sun_spark",
+   "Ember Shot",
+   "shot",
+   24,
+   0.8,
+   "sun_spark",
+   "An auto-fired ember seeks the nearest enemy."
+  ],
+  [
+   "consecration",
+   "Provocation",
+   "aura",
+   17,
+   0.8,
+   "consecration",
+   "A close aura scorches enemies around you."
+  ],
+  [
+   "cleansing_flame",
+   "Pillar of Fire",
+   "pulse",
+   40,
+   2.5,
+   "cleansing_flame",
+   "Flame erupts through the nearby crowd."
+  ],
+  [
+   "judgment",
+   "War March",
+   "sigil",
+   70,
+   3.2,
+   "judgment",
+   "A verdict of fire strikes the nearest enemy."
+  ],
+  [
+   "dawn_lance",
+   "Cinder Wave",
+   "shot",
+   57,
+   1.1,
+   "dawn_lance",
+   "A cinder bolt seeks enemies beyond the front line."
+  ],
+  [
+   "pyre_orbit",
+   "Iron Halo",
+   "orbit",
+   26,
+   0.6,
+   "pyre_orbit",
+   "Blades orbit you and strike enemies that close in."
+  ],
+  [
+   "sanctuary",
+   "Consecration",
+   "pulse",
+   62,
+   3.8,
+   "sanctuary",
+   "A pulse that restores vitality and burns nearby enemies."
+  ],
+  [
+   "radiant_crown",
+   "Chain Lightning",
+   "chain",
+   53,
+   1.5,
+   "radiant_crown",
+   "Lightning leaps between nearby enemies."
+  ],
+  [
+   "solar_fall",
+   "Sun Spear",
+   "sigil",
+   112,
+   2.8,
+   "solar_fall",
+   "A spear of light strikes the ground beneath an enemy."
+  ],
+  [
+   "unconquered_sun",
+   "Duel of Wills",
+   "pulse",
+   170,
+   2.7,
+   "unconquered_sun",
+   "The final form answers with a powerful pulse."
+  ]
+ ],
+ "wanderer": [
+  [
+   "whisperbolt",
+   "Sigil",
+   "shot",
+   22,
+   0.75,
+   "whisperbolt",
+   "A sigil-bolt seeks the nearest enemy."
+  ],
+  [
+   "mirror_sigil",
+   "Tome Shield",
+   "mirror",
+   24,
+   1.4,
+   "mirror_sigil",
+   "A ward redirects part of contact damage."
+  ],
+  [
+   "chain_strings",
+   "Glyph Volley",
+   "chain",
+   24,
+   1.7,
+   "chain_strings",
+   "Runes link the crowd and strike along the thread."
+  ],
+  [
+   "marionette",
+   "Unwritten Word",
+   "marionette",
+   32,
+   1.1,
+   "marionette",
+   "A defeated elite can become an ally."
+  ],
+  [
+   "whispered_truth",
+   "Star Map",
+   "reveal",
+   0,
+   20,
+   "whispered_truth",
+   "Draw fragments from farther away."
+  ],
+  [
+   "fog_step",
+   "Borrowed Sight",
+   "dash",
+   0,
+   5,
+   "fog_step",
+   "Veilstep briefly hides you from enemies."
+  ],
+  [
+   "forked_path",
+   "Foretell",
+   "fork",
+   0,
+   20,
+   "forked_path",
+   "Choose a path when the opportunity appears."
+  ],
+  [
+   "crowned_shadow",
+   "Forbidden Name",
+   "clones",
+   25,
+   1.6,
+   "crowned_shadow",
+   "Echoes of yourself fire at nearby enemies."
+  ],
+  [
+   "fate_card",
+   "Allsage",
+   "fate",
+   0,
+   20,
+   "fate_card",
+   "More Fate opens more chances to redraw."
+  ],
+  [
+   "unknowable",
+   "Hidden World",
+   "pulse",
+   145,
+   2.8,
+   "unknowable",
+   "A hidden world briefly opens around you."
+  ]
+ ],
+ "hollow_seer": [
+  [
+   "dream_shard",
+   "Bleed Strike",
+   "shot",
+   20,
+   0.72,
+   "dream_shard",
+   "A thrown shard seeks the nearest enemy."
+  ],
+  [
+   "mind_whisper",
+   "Instigator",
+   "chain",
+   26,
+   1.9,
+   "mind_whisper",
+   "A whisper leaps between nearby enemies."
+  ],
+  [
+   "slumber",
+   "Hex Circle",
+   "sleep",
+   0,
+   5,
+   "slumber",
+   "Still enemies in place until struck."
+  ],
+  [
+   "slumber_crown",
+   "Siren",
+   "sleep",
+   25,
+   3.6,
+   "slumber_crown",
+   "A song that lulls a larger crowd."
+  ],
+  [
+   "thought_theft",
+   "Agony Bond",
+   "chain",
+   35,
+   2.2,
+   "thought_theft",
+   "A chain of thought strikes the crowd."
+  ],
+  [
+   "nightmare_ring",
+   "Dread Aura",
+   "pulse",
+   46,
+   2.6,
+   "nightmare_ring",
+   "A ring of dread strikes nearby enemies."
+  ],
+  [
+   "elder_echo",
+   "Vital Mirror",
+   "clones",
+   38,
+   1.5,
+   "elder_echo",
+   "Mirrored selves fire alongside you."
+  ],
+  [
+   "dream_sigil",
+   "Ruin Spiral",
+   "sigil",
+   88,
+   3,
+   "dream_sigil",
+   "A field of ruin blooms beneath an enemy."
+  ],
+  [
+   "mind_spike",
+   "Sovereign Decree",
+   "shot",
+   55,
+   1,
+   "mind_spike",
+   "A focused spike pierces the waking world."
+  ],
+  [
+   "hollow_dreamer",
+   "Mirror Self",
+   "pulse",
+   155,
+   2.5,
+   "hollow_dreamer",
+   "The final form answers with a pulse."
+  ]
+ ]
+}

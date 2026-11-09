@@ -1,0 +1,128 @@
+[
+ {
+  "id": "pendulum",
+  "name": "Spirit Pendulum",
+  "glyph": "compass",
+  "description": "Reveals one additional choice at Sequence gates.",
+  "source": "Complete Sequence 8 on any pathway."
+ },
+ {
+  "id": "codex_tome",
+  "name": "Codex Tome",
+  "glyph": "book",
+  "description": "Shows enemy vitality bars in the field.",
+  "source": "Vanquish 100 enemies in a single descent."
+ },
+ {
+  "id": "pocket_watch",
+  "name": "Pocket Watch",
+  "glyph": "timer",
+  "description": "Grants one extra Fate reroll at your first Sequence gate.",
+  "source": "Complete a Sequence 6 boss gate."
+ },
+ {
+  "id": "tarot_deck",
+  "name": "Tarot Deck",
+  "glyph": "star",
+  "description": "Swap one offered card once per descent.",
+  "source": "Complete a Sequence 2 boss gate."
+ },
+ {
+  "id": "brass_lens",
+  "name": "Brass Lens",
+  "glyph": "eye",
+  "description": "Fragments travel toward you 10% faster.",
+  "source": "Record five different enemies."
+ },
+ {
+  "id": "field_compass",
+  "name": "Field Compass",
+  "glyph": "compass",
+  "description": "+15% fragment collection reach.",
+  "source": "Complete three descents."
+ },
+ {
+  "id": "wax_seal",
+  "name": "Wax Seal",
+  "glyph": "shield",
+  "description": "+5 starting vitality on every descent.",
+  "source": "Complete your first descent."
+ },
+ {
+  "id": "ash_hourglass",
+  "name": "Ash Hourglass",
+  "glyph": "timer",
+  "description": "Shows the current gate countdown in your loadout.",
+  "source": "Survive five minutes in one descent."
+ },
+ {
+  "id": "scholar_glass",
+  "name": "Scholar's Glass",
+  "glyph": "book",
+  "description": "Shows the number of active enemies in your loadout.",
+  "source": "Vanquish 250 enemies across descents."
+ },
+ {
+  "id": "quiet_map",
+  "name": "Quiet Map",
+  "glyph": "compass",
+  "description": "Shows the next Sequence and whether it is a boss gate.",
+  "source": "Complete Sequence 7 on any pathway."
+ },
+ {
+  "id": "candle_holder",
+  "name": "Candle Holder",
+  "glyph": "flame",
+  "description": "Shows available altar offerings beside your charms.",
+  "source": "Prepare an altar ritual."
+ },
+ {
+  "id": "sealed_notebook",
+  "name": "Sealed Notebook",
+  "glyph": "scroll",
+  "description": "Keeps a dated record of your item discoveries.",
+  "source": "Perform the Rite of the Unbound Page."
+ },
+ {
+  "id": "bone_dice",
+  "name": "Bone Dice",
+  "glyph": "star",
+  "description": "+1 Fate reroll at the start of every descent.",
+  "source": "Complete Sequence 5 on any pathway."
+ },
+ {
+  "id": "ferry_token",
+  "name": "Ferry Token",
+  "glyph": "coins",
+  "description": "+1% movement speed on every descent.",
+  "source": "Complete a descent on two different pathways."
+ },
+ {
+  "id": "moth_pin",
+  "name": "Moth Pin",
+  "glyph": "wind",
+  "description": "+1% cast speed on every descent.",
+  "source": "Complete a descent on all three launch pathways."
+ },
+ {
+  "id": "watchful_monocle",
+  "name": "Watchful Monocle",
+  "glyph": "eye",
+  "description": "Shows boss telegraphs 0.3 seconds earlier.",
+  "source": "Record a gate boss in the Encyclopedia."
+ },
+ {
+  "id": "votive_purse",
+  "name": "Votive Purse",
+  "glyph": "coins",
+  "description": "+10% Coins from enemies and bosses.",
+  "source": "Complete two descents."
+ },
+ {
+  "id": "quiet_buckle",
+  "name": "Quiet Buckle",
+  "glyph": "zap",
+  "description": "Veilstep recovers one second faster.",
+  "source": "Complete a full Sequence 1 gate."
+ }
+]
