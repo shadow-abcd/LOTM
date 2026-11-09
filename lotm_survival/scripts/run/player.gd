@@ -43,14 +43,15 @@ func setup(pid: String, accent: Color) -> void:
 		sprite.offset = Vector2(0, -t.get_height() / 2.0 + 6)
 	add_child(sprite)
 
-func tick(delta: float, dir: Vector2, spd_mult: float, run) -> void:
+func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 	_t += delta
 	invuln = maxf(0.0, invuln - delta)
 	dash_cd_t = maxf(0.0, dash_cd_t - delta)
 	flash = maxf(0.0, flash - delta * 4.0)
 	# Chronicle: "Refuse the pact" — the refused-pact blessing revives you
 	# once per descent at half vitality, before the run's death check fires.
-	if hp <= 0.0 and Chronicle.on_death(run):
+	# The player is a direct child of the Run node, so get_parent() is the run.
+	if hp <= 0.0 and Chronicle.on_death(get_parent()):
 		return
 	if dash_t > 0.0:
 		dash_t -= delta
@@ -78,6 +79,6 @@ func try_dash(dir: Vector2, cd: float, duration: float) -> bool:
 	dash_dir = dir if dir.length() > 0.1 else Vector2(face, 0.0)
 	dash_dir = dash_dir.normalized()
 	dash_t = 0.18
-	invuln = maxf(invun, duration) if false else maxf(invuln, duration)
+	invuln = maxf(invuln, duration)
 	dash_cd_t = cd
 	return true
