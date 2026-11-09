@@ -1,0 +1,21 @@
+name: Check GDScript syntax
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run GDScript syntax checker
+        run: python tools/check_gd.py lotm_survival
+      - name: Show how to fix
+        if: failure()
+        run: |
+          echo "The checker flagged script syntax problems (bad indent, unbalanced brackets, unknown autoload calls)."
+          echo "Open the file at the line shown and fix it, then re-push."
