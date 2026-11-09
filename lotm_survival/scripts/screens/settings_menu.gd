@@ -10,6 +10,7 @@ var _tab_buttons: Dictionary = {}
 var _cur = "audio"
 var _waiting = ""
 var _wait_btn: Button = null
+var _erase_armed = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -69,6 +70,7 @@ func _select(tab: String) -> void:
 	for k in _tab_buttons.keys():
 		_tab_buttons[k].button_pressed = (k == tab)
 	UI.clear(_body)
+	_erase_armed = false
 	match tab:
 		"audio": _audio()
 		"graphics": _graphics()
@@ -142,8 +144,8 @@ func _input(e: InputEvent) -> void:
 		if e.physical_keycode != KEY_ESCAPE:
 			Cfg.rebind(_waiting, e.physical_keycode)
 			Sound.play_sfx("ui_confirm")
-		_waiting = ""
-		_select("controls")
+			_waiting = ""
+			_select("controls")
 	elif e.is_action_pressed("pause") and _waiting == "":
 		get_viewport().set_input_as_handled()
 		close()
@@ -163,14 +165,24 @@ func _gameplay() -> void:
 	_row("difficulty", "Difficulty", opt)
 	_row("pause", "Pause when unfocused", UI.toggle("", "", bool(Cfg.get_v("pause_on_focus_loss")), func(on): Cfg.set_v("pause_on_focus_loss", on)))
 	_section("Save data")
-	_body.add_child(UI.button(" Erase save (hold shift to confirm)", "reset", _erase, Vector2(0, 46)))
+	var erase_btn = UI.button(" Erase save", "reset", _erase, Vector2(0, 46))
+	if _erase_armed:
+		erase_btn.text = " Tap again to erase everything"
+		erase_btn.add_theme_color_override("font_color", Color("#e0705a"))
+	elif Input.is_key_pressed(KEY_SHIFT):
+		erase_btn.text = " Erase save (shift held — will erase)"
+	_body.add_child(erase_btn)
+	_body.add_child(UI.wrap_label("Tap once to arm, twice to erase. On a keyboard you may hold Shift instead of the first tap.", 12, UI.TEXT_DIM))
 
 func _erase() -> void:
-	if Input.is_key_pressed(KEY_SHIFT):
-		Store.wipe()
-		UI.toast("Save erased", "reset")
-	else:
-		UI.toast("Hold Shift while pressing to erase", "info")
+	if not _erase_armed and not Input.is_key_pressed(KEY_SHIFT):
+		_erase_armed = true
+		Sound.play_sfx("ui_error")
+		_select("gameplay")
+		return
+	_erase_armed = false
+	Store.wipe()
+	UI.toast("Save erased", "reset")
 
 func _access() -> void:
 	_section("Readability")
