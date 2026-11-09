@@ -1,6 +1,8 @@
 extends CanvasLayer
 ## In-run HUD: vitality, insight, sequence, abilities, boss bar, timers, touch controls, screen overlays.
 
+const Cab = preload("res://scripts/sections/cabinet.gd")
+
 var run = null
 var touch_vec = Vector2.ZERO
 var _root: Control
@@ -295,17 +297,22 @@ func flash(color: Color, alpha: float) -> void:
 func _rebuild_abilities() -> void:
 	UI.clear(_ab_row)
 	_ab_slots = []
-	const Cab = preload("res://scripts/sections/cabinet.gd")
 	for a in run.abilities:
 		var lv = int(a["level"])
 		var s = UI.slot(Cab._icon_for(str(a["kind"])), ["common", "uncommon", "rare", "epic", "mythic"][clampi(int((lv - 1) / 2.0), 0, 4)], 58, DB.ELEMENT_COLORS.get(a["element"], Color.WHITE))
 		s.tooltip_text = "%s (Lv %d)" % [a["name"], lv]
 		var ov = ColorRect.new()
 		ov.color = Color(0, 0, 0, 0.55)
-		ov.anchor_right = 1.0
-		ov.anchor_bottom = 0.0
 		ov.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		s.add_child(ov)
+		ov.anchor_left = 0.0
+		ov.anchor_right = 1.0
+		ov.anchor_top = 0.0
+		ov.anchor_bottom = 0.0
+		ov.offset_left = 0
+		ov.offset_right = 0
+		ov.offset_top = 0
+		ov.offset_bottom = 0
 		var l = UI.label(str(lv), 13, UI.GOLD, true)
 		l.position = Vector2(4, 36)
 		s.add_child(l)

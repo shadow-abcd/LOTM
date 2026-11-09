@@ -38,6 +38,7 @@ var order_label: Label
 var phase = 0
 var phase_t = 0.0
 var spiral = 0.0
+var _contrast := Color(1, 1, 1)
 
 func setup(id: String, d: Dictionary, hp_scale: float, dmg_scale: float) -> void:
 	kind = id
@@ -51,6 +52,8 @@ func setup(id: String, d: Dictionary, hp_scale: float, dmg_scale: float) -> void
 	weak = d.get("weak", [])
 	resist = d.get("resist", [])
 	awake = behaviour != "sound"
+	if Cfg.get_v("high_contrast"):
+		_contrast = Color(1.25, 1.25, 1.25)
 	var tex_name: String = str(d.get("tex", id))
 	var sh = Sprite2D.new()
 	sh.texture = UI.tex("res://assets/sprites/shadow.png")
@@ -69,7 +72,7 @@ func setup(id: String, d: Dictionary, hp_scale: float, dmg_scale: float) -> void
 	sprite.offset = Vector2(0, -52)
 	add_child(sprite)
 	if Cfg.get_v("high_contrast"):
-		sprite.modulate = Color(1.25, 1.25, 1.25)
+		sprite.modulate = _contrast
 
 func make_elite() -> void:
 	elite = true
@@ -133,7 +136,7 @@ func tick(delta: float, run) -> void:
 			mark_sprite = null
 	if elite_sprite != null:
 		elite_sprite.rotation += delta
-	var tint = Color(1, 1, 1)
+	var tint = _contrast
 	if flash > 0.0:
 		tint = Color(1.0 + flash, 1.0 + flash * 0.8, 1.0 + flash * 0.8)
 	if frozen > 0.0:
