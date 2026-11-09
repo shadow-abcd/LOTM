@@ -7,6 +7,7 @@ const SECTIONS := [
 	["rack", "Rack", "rack", "res://scripts/sections/rack.gd"],
 	["shelf", "Shelf", "shelf", "res://scripts/sections/shelf.gd"],
 	["desk", "Desk", "desk", "res://scripts/sections/desk.gd"],
+	["levels", "Levels", "levelup", "res://scripts/sections/levels.gd"],
 	["grimoire", "Grimoire", "grimoire", "res://scripts/sections/grimoire.gd"],
 	["cabinet", "Cabinet", "cabinet", "res://scripts/sections/cabinet.gd"],
 	["altar", "Altar", "altar", "res://scripts/sections/altar.gd"],
