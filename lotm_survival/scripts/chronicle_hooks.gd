@@ -1,21 +1,19 @@
 extends Node
 ## Chronicle Hooks (autoload): applies permanent story-flag effects during a
-## descent without touching the large run.gd. run.gd / player.gd / pickup.gd
-## call into these helpers; each one is safe to call with any arguments.
+## descent without touching the large run.gd. Small scripts call into these
+## helpers; the revive flag lives on the player instance, so a fresh descent
+## (which always creates a fresh player) starts with the blessing available.
 
 ## Refused-pact blessing: revive once per descent at half vitality.
 ## Returns true if the player was revived (the descent continues).
-var blessing_used := false
-
-func reset_descent() -> void:
-	blessing_used = false
-
 func on_death(r) -> bool:
-	if r == null or blessing_used:
+	if r == null:
+		return false
+	if r.player.has_meta("pact_revive_used"):
 		return false
 	if Store.d.get("start_blessing", "") != "revive_half":
 		return false
-	blessing_used = true
+	r.player.set_meta("pact_revive_used", true)
 	r.player.hp = r.player.max_hp * 0.5
 	r.player.invuln = 1.5
 	r.hud.announce("The Refused Pact Wakes", "You kept your soul. It keeps you — once.")
