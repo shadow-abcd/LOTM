@@ -15,16 +15,16 @@ Command line, first time only: `godot --headless --import`, then `godot --path .
 | **Title** | Painted key art, embers, icon menu: Descend, Study, Settings, Quit |
 | **Study** (hub) | One separate section per sidebar tab, each with its own icon: Pathways, Equipment, Rack, Shelf, Desk, Grimoire, Cabinet, Altar, Auction, Bestiary, Places |
 | **Settings** | Five sections: Audio, Graphics, Controls (key rebinding + touch), Gameplay, Accessibility |
-| **Descent** | Auto-fire survivors-like. 3 pathways, 10 abilities each, level-up draft, levels 1–100, Sequence 9 → 1, three gate bosses, six Places with hazards and unique enemies, Veilstep, Spirit World, charms, artifact active |
+| **Descent** | Auto-fire survivors-like. 3 pathways, 10 abilities each, level-up draft, levels 1–100, Sequence 9 → 1, three gate bosses, six Places with hazards and unique enemies, Veilstep, spirit World, charms, artifact active |
 | **HUD** | Vitality, Insight, Sequence and Place, ability slots with cooldown fill, boss bar, timers, charm/dash buttons, virtual stick on touch devices |
 
 ## "Forbid the forbids" — Lift the Forbids
-Settings › Gameplay › **Lift the Forbids** (default **ON**) removes every lock:
-- Sequence gates (6, 2, 1) never block a descent (no Formula or potion needed)
-- All pathways, artifacts, charms and items are open to equip
-- All three artifact slots are available
+Settings › Gameplay › **Lift the Forbids** (default **OFF**) enforces the original strict rules:
+- Sequence gates (6, 2, 1) block a descent until the gate's Formula is found **and** its potion brewed
+- Pathways, artifacts, charms and items must be purchased/unlocked (Diamonds and Coins)
+- Artifact slots are earned, not given
 
-Turn it OFF to get the original strict rules back (Formula found **and** potion brewed per gate, purchases required).
+Turn it ON to lift every lock: gates never block, all pathways, artifacts, charms and items are open to equip, and all three artifact slots are available.
 
 ## Controls
 WASD / arrows move · Space Veilstep · R Spirit World · Q / E charms · F artifact active · 1–4 pick a draft card · P / Esc pause. All rebindable in Settings.
