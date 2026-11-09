@@ -360,6 +360,6 @@ func unequip(kind: String, id: String) -> void:
 
 func week_key() -> String:
 	var t = Time.get_datetime_dict_from_system(true)
-	var unix = Time.get_unix_time_from_system(true)
+	var unix = Time.get_unix_time_from_system()
 	var monday: float = floor(unix / 86400.0) - float((int(t["weekday"]) + 6) % 7)
 	return str(int(monday))
