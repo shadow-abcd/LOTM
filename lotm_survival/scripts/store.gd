@@ -18,6 +18,10 @@ var d: Dictionary = {}
 func _ready() -> void:
 	d = _defaults()
 	_load()
+	if not d.has("reputation"):
+		d["reputation"] = {}
+	if not d.has("relationships"):
+		d["relationships"] = {}
 
 func _defaults() -> Dictionary:
 	return {
@@ -32,6 +36,7 @@ func _defaults() -> Dictionary:
 		"ritual_buff": {}, "deepest": {}, "runs": 0, "kills": 0, "wins": 0, "best_time": 0.0,
 		"fail_streak": 0, "weekly": {"week": "", "kills": 0, "best_seq": 9, "claimed": []},
 		"codex": [], "auction_bought": [], "inferer_used": 0,
+		"reputation": {}, "relationships": {},
 	}
 
 func _load() -> void:
@@ -56,6 +61,45 @@ func commit() -> void:
 
 func wipe() -> void:
 	d = _defaults()
+	commit()
+
+# ── reputation (faction standings, -3 to +3) ──
+const FACTIONS := {"church": ["The Church", "sigil"], "nighthawks": ["The Nighthawks", "eye"], "tarot_club": ["The Tarot Club", "gem"]}
+
+func rep(faction: String) -> int:
+	return int(d["reputation"].get(faction, 0))
+
+func rep_tier(faction: String) -> String:
+	match rep(faction):
+		3: return "Cherished"
+		2: return "Trusted"
+		1: return "Welcomed"
+		0: return "Neutral"
+		-1: return "Disliked"
+		-2: return "Hostile"
+		_: return "Hunted"
+
+func add_rep(faction: String, n: int) -> void:
+	d["reputation"][faction] = clampi(rep(faction) + n, -3, 3)
+	commit()
+
+# ── relationships (allies, 0 to 5) ──
+const ALLIES := {"mentor": ["Evan — the Old Mentor", "codex_tome"], "seer": ["Cattleya — the Seer", "eye"], "nighthawk_contact": ["Daly — Nighthawk Contact", "map"]}
+
+func relationship(ally: String) -> int:
+	return int(d["relationships"].get(ally, 0))
+
+func rel_tier(ally: String) -> String:
+	match relationship(ally):
+		0: return "Stranger"
+		1: return "Acquainted"
+		2: return "Loyal"
+		3: return "Confidant"
+		4: return "Bound"
+		_: return "Sworn"
+
+func add_rel(ally: String, n: int) -> void:
+	d["relationships"][ally] = clampi(relationship(ally) + n, 0, 5)
 	commit()
 
 # ── currencies / reagents ──
