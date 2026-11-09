@@ -1,15 +1,10 @@
 extends Node
-## Chronicle Hooks (autoloaded by main.tscn): applies permanent story-flag effects
-## during a descent, without rewriting run.gd wholesale. run.gd calls Chronicle.hooks.ready(self)
-## if it has been taught to; until then the HUD-side and loadout-side effects apply.
-
-extends Node
+## Chronicle Hooks: applies permanent story-flag effects during a descent
+## without rewriting run.gd wholesale. Call Chronicles.bind(run) from a small
+## patch in run.gd; until then, loadout-side and enemy-side effects still apply.
 
 var run = null
 var blessing_used := false
-
-func _ready() -> void:
-	pass
 
 func bind(r) -> void:
 	run = r
@@ -34,24 +29,18 @@ func on_death() -> bool:
 
 ## Called from run.gd's elite spawn timer: returns the adjusted interval.
 func elite_interval(base: float) -> float:
-	if run == null:
-		return base
 	if str(Store.d.get("run_variant", "")) == "bounty":
 		return base * 0.5
 	return base
 
 ## Called from run.gd's coin pickup: returns the adjusted value.
 func coin_value(v: int) -> int:
-	if run == null:
-		return v
 	if str(Store.d.get("run_variant", "")) == "bounty":
 		return v * 2
 	return v
 
 ## Called from run.gd's elite loot roll: returns the adjusted characteristic chance.
 func characteristic_chance(base: float) -> float:
-	if run == null:
-		return base
 	if str(Store.d.get("run_variant", "")) == "confession":
 		return base * 5.0
 	return base
