@@ -10,6 +10,7 @@ var _tab_buttons: Dictionary = {}
 var _cur = "audio"
 var _waiting = ""
 var _wait_btn: Button = null
+var _erase_armed = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -66,6 +67,7 @@ func _reset() -> void:
 
 func _select(tab: String) -> void:
 	_cur = tab
+	_erase_armed = false
 	for k in _tab_buttons.keys():
 		_tab_buttons[k].button_pressed = (k == tab)
 	UI.clear(_body)
@@ -163,14 +165,22 @@ func _gameplay() -> void:
 	_row("difficulty", "Difficulty", opt)
 	_row("pause", "Pause when unfocused", UI.toggle("", "", bool(Cfg.get_v("pause_on_focus_loss")), func(on): Cfg.set_v("pause_on_focus_loss", on)))
 	_section("Save data")
-	_body.add_child(UI.button(" Erase save (hold shift to confirm)", "reset", _erase, Vector2(0, 46)))
+	_body.add_child(UI.button(" Erase save (tap twice to confirm)", "reset", _erase, Vector2(0, 46)))
 
 func _erase() -> void:
-	if Input.is_key_pressed(KEY_SHIFT):
+	if not _erase_armed:
+		_erase_armed = true
+		UI.toast("Tap again to erase your save", "info")
+		_arm_timer()
+	else:
+		_erase_armed = false
 		Store.wipe()
 		UI.toast("Save erased", "reset")
-	else:
-		UI.toast("Hold Shift while pressing to erase", "info")
+
+func _arm_timer() -> void:
+	var t = get_tree().create_timer(3.0)
+	t.timeout.connect(func():
+		_erase_armed = false)
 
 func _access() -> void:
 	_section("Readability")
