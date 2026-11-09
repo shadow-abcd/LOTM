@@ -48,6 +48,10 @@ func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 	invuln = maxf(0.0, invuln - delta)
 	dash_cd_t = maxf(0.0, dash_cd_t - delta)
 	flash = maxf(0.0, flash - delta * 4.0)
+	# Chronicle: "Refuse the pact" — the refused-pact blessing revives you
+	# once per descent at half vitality, before the run's death check fires.
+	if hp <= 0.0 and Chronicle.on_death():
+		return
 	if dash_t > 0.0:
 		dash_t -= delta
 		position += dash_dir * 560.0 * delta
