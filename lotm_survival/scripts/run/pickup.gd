@@ -10,6 +10,9 @@ var sprite: Sprite2D
 
 func setup(k: String, v: float, r: String = "", color: Color = Color.WHITE) -> void:
 	kind = k
+	# Chronicle: Bounty runs pay double for field coins.
+	if k == "coin":
+		v = Chronicle.coin_value(v)
 	value = v
 	ref = r
 	sprite = Sprite2D.new()
@@ -30,7 +33,7 @@ func setup(k: String, v: float, r: String = "", color: Color = Color.WHITE) -> v
 			sprite.texture = UI.icon(ref)
 			sprite.modulate = color
 			sprite.scale = Vector2(0.38, 0.38)
-	var m = CanvasItemMaterial.new()
+	var m = CanvasItemMaterial()
 	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD if k == "frag" else CanvasItemMaterial.BLEND_MODE_MIX
 	sprite.material = m
 	add_child(sprite)

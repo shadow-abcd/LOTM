@@ -63,7 +63,7 @@ func _ready() -> void:
 	_dia_lbl = UI.label("0", 20, Color("#7fd8f0"), true)
 	top.add_child(_dia_lbl)
 	top.add_child(UI.icon_button("settings", "Settings", _open_settings, 52))
-	top.add_child(UI.button("  Descend", "play", func(): UI.goto("run"), Vector2(190, 52)))
+	top.add_child(UI.button("  Descend", "play", _descend, Vector2(190, 52)))
 	root.add_child(top)
 
 	var mid = HBoxContainer.new()
@@ -97,6 +97,16 @@ func _ready() -> void:
 	Store.changed.connect(_update_bar)
 	_update_bar()
 	_select(last_tab)
+
+## Chronicle: "Play double agent" — both shops answer to you, but every descent is paid for.
+func _descend() -> void:
+	var entry := int(Store.d.get("run_entry_cost", 0))
+	if entry > 0:
+		if not Store.spend("coins", entry):
+			UI.toast("The factions want %d Coins before you descend. You cannot pay." % entry, "coin")
+			return
+		UI.toast("Entry tithe paid: %d Coins. Both factions watch you descend." % entry, "eye")
+	UI.goto("run")
 
 func _update_bar() -> void:
 	_coin_lbl.text = str(Store.coins())

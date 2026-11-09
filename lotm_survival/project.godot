@@ -16,6 +16,7 @@ Cfg="*res://scripts/cfg.gd"
 Store="*res://scripts/store.gd"
 Sound="*res://scripts/sound.gd"
 UI="*res://scripts/ui.gd"
+Chronicle="*res://scripts/chronicle_hooks.gd"
 
 [display]
 

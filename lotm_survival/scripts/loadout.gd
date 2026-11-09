@@ -30,6 +30,10 @@ static func compute(include_ritual: bool = true) -> Dictionary:
 		s["insight"] += float(rb.get("insight", 0.0))
 		s["pickup"] += float(rb.get("pickup", 0.0))
 		s["dmg"] += float(rb.get("dmg", 0.0))
+	# Chronicle story flags (permanent choices made in the Chronicle tab)
+	s["dash_cd"] *= float(Store.d.get("dash_cd_mult", 1.0))
+	if bool(Store.d.get("hide_seq_preview", false)):
+		s["show_next"] = false
 	return s
 
 static func _artifact(s: Dictionary, id: String) -> void:

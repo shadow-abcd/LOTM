@@ -30,7 +30,7 @@ func setup(pid: String, accent: Color) -> void:
 	glow.modulate = Color(accent.r, accent.g, accent.b, 0.35)
 	glow.position = Vector2(0, -44)
 	glow.scale = Vector2(1.5, 1.8)
-	var m = CanvasItemMaterial.new()
+	var m = CanvasItemMaterial()
 	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	glow.material = m
 	add_child(glow)
@@ -48,6 +48,11 @@ func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 	invuln = maxf(0.0, invuln - delta)
 	dash_cd_t = maxf(0.0, dash_cd_t - delta)
 	flash = maxf(0.0, flash - delta * 4.0)
+	# Chronicle: "Refuse the pact" — the refused-pact blessing revives you
+	# once per descent at half vitality, before the run's death check fires.
+	# The player is a direct child of the Run node, so get_parent() is the run.
+	if hp <= 0.0 and Chronicle.on_death(get_parent()):
+		return
 	if dash_t > 0.0:
 		dash_t -= delta
 		position += dash_dir * 560.0 * delta
