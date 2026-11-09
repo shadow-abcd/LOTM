@@ -1,6 +1,11 @@
 extends Node2D
 ## The player body. Movement/dash/hurt state; the Run script drives tick().
 
+## The original player sprites are about 128 pixels tall. Custom character art
+## (any resolution) is scaled to this fixed on-screen height, so replacements
+## for player_<pathway>.png always render at the classic size.
+const SPRITE_HEIGHT := 128.0
+
 var hp = 100.0
 var max_hp = 100.0
 var speed = 190.0
@@ -30,7 +35,7 @@ func setup(pid: String, accent: Color) -> void:
 	glow.modulate = Color(accent.r, accent.g, accent.b, 0.35)
 	glow.position = Vector2(0, -44)
 	glow.scale = Vector2(1.5, 1.8)
-	var m = CanvasItemMaterial()
+	var m = CanvasItemMaterial.new()
 	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	glow.material = m
 	add_child(glow)
@@ -41,6 +46,10 @@ func setup(pid: String, accent: Color) -> void:
 	sprite.texture = t
 	if t != null:
 		sprite.offset = Vector2(0, -t.get_height() / 2.0 + 6)
+		# Normalize to a fixed on-screen height: any custom character art at
+		# any resolution renders at the classic player size.
+		var scl: float = SPRITE_HEIGHT / float(t.get_height())
+		sprite.scale = Vector2(scl, scl)
 	add_child(sprite)
 
 func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
@@ -48,11 +57,6 @@ func tick(delta: float, dir: Vector2, spd_mult: float) -> void:
 	invuln = maxf(0.0, invuln - delta)
 	dash_cd_t = maxf(0.0, dash_cd_t - delta)
 	flash = maxf(0.0, flash - delta * 4.0)
-	# Chronicle: "Refuse the pact" — the refused-pact blessing revives you
-	# once per descent at half vitality, before the run's death check fires.
-	# The player is a direct child of the Run node, so get_parent() is the run.
-	if hp <= 0.0 and Chronicle.on_death(get_parent()):
-		return
 	if dash_t > 0.0:
 		dash_t -= delta
 		position += dash_dir * 560.0 * delta
