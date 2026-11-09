@@ -67,10 +67,10 @@ func _reset() -> void:
 
 func _select(tab: String) -> void:
 	_cur = tab
-	_erase_armed = false
 	for k in _tab_buttons.keys():
 		_tab_buttons[k].button_pressed = (k == tab)
 	UI.clear(_body)
+	_erase_armed = false
 	match tab:
 		"audio": _audio()
 		"graphics": _graphics()
