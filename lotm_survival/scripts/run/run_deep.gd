@@ -1,16 +1,20 @@
 extends "res://scripts/run/run.gd"
-## Combat depth layer for the descent. Extends the battle-tested run loop without
-## touching it: signature pathway abilities (Flame of Purification / Starfall
-## Judgment / Mirror World), potions establishing the signature at run start,
-## and roaming Formula bearers that carry undiscovered Formulas.
+## Combat depth + performance layer for the descent. Extends the battle-tested
+## loop without touching it: signature pathway abilities, potions establishing
+## the signature at run start, roaming Formula bearers, and object pooling for
+## projectiles & pickups (no per-shot allocations — the biggest mobile win).
 
 const SIGNATURE_KINDS := ["flame_wave", "starfall", "mirror_world"]
 
 var bearer_t := 95.0
+var _proj_pool: Array = []
+var _pickup_pool: Array = []
 
 func _ready() -> void:
 	super._ready()
 	_connect_potion_abilities()
+
+# ───────── signature pathway abilities ─────────
 
 func _signature_ability() -> Dictionary:
 	for s in DB.abilities_of(pid):
@@ -65,8 +69,6 @@ func _cast_signature(a: Dictionary) -> void:
 	wake_near(c)
 	match str(a["kind"]):
 		"flame_wave":
-			# Red Priest: a ring of purifying fire expands, burning everything it
-			# touches and restoring vitality per enemy scorched.
 			var r := minf(560.0, 300.0 + 30.0 * l)
 			fx.ring(c, col, r, 0.7)
 			fx.glow_pop(c, col, r * 0.9, 0.5)
@@ -82,15 +84,12 @@ func _cast_signature(a: Dictionary) -> void:
 				player.hp = minf(player.max_hp, player.hp + heal)
 				fx.number(player.position + Vector2(0, -30), heal, Color(0.5, 1.0, 0.6))
 		"starfall":
-			# Hermit: falling stars bombard the crowd, each impact bursting.
 			var n := 4 + l
 			for i in n:
 				var ang := TAU * float(i) / float(n) + time
 				var at := c + Vector2.from_angle(ang) * randf_range(120.0, 320.0)
 				get_tree().create_timer(0.1 + 0.12 * float(i)).timeout.connect(_starfall_strike.bind(at, dmg, el, _cur_aid))
 		"mirror_world":
-			# Demoness: the crowd is pulled into the Mirror World — frozen, marked
-			# and struck; stored wounds detonate inside the ring.
 			var r := minf(520.0, 320.0 + 20.0 * l)
 			fx.ring(c, col, r, 0.8)
 			fx.flash(Color(0.45, 0.3, 0.7), 0.25)
@@ -120,6 +119,8 @@ func _starfall_strike(at: Vector2, dmg: float, el: String, aid: String) -> void:
 		damage_enemy(e, dmg, el, "sigil")
 	_cur_aid = ""
 
+# ───────── Formula bearers ─────────
+
 func _timers(delta: float) -> void:
 	super._timers(delta)
 	bearer_t -= delta
@@ -127,8 +128,6 @@ func _timers(delta: float) -> void:
 		bearer_t = 95.0
 		_spawn_formula_bearer()
 
-## Formula discovery encounter: a sealed courier roams the field, carrying the
-## next undiscovered Formula of your pathway. Strike it down to claim the secret.
 func _spawn_formula_bearer() -> void:
 	var left: Array = Store.undiscovered_formulas(pid)
 	if left.is_empty():
@@ -154,3 +153,117 @@ func kill_enemy(e: Node2D) -> void:
 		hud.toast("The bearer's note dissolves into knowledge.", "scroll")
 		fx.flash(Color(1.0, 0.95, 0.7), 0.2)
 		Sound.play_sfx("unlock", -2.0)
+
+# ───────── object pooling ─────────
+
+func _pooled_proj() -> Node2D:
+	while not _proj_pool.is_empty():
+		var p: Node2D = _proj_pool.pop_back()
+		if is_instance_valid(p):
+			if not p.is_inside_tree():
+				add_child(p)
+			return p
+	var fresh: Node2D = ProjS.new()
+	add_child(fresh)
+	return fresh
+
+func _return_proj(p: Node2D) -> void:
+	if not is_instance_valid(p):
+		return
+	if p.is_inside_tree():
+		remove_child(p)
+	if _proj_pool.size() < 90:
+		_proj_pool.append(p)
+	else:
+		p.queue_free()
+
+func _pooled_pickup() -> Node2D:
+	while not _pickup_pool.is_empty():
+		var p: Node2D = _pickup_pool.pop_back()
+		if is_instance_valid(p):
+			if not p.is_inside_tree():
+				add_child(p)
+			return p
+	var fresh: Node2D = PickupS.new()
+	add_child(fresh)
+	return fresh
+
+func _return_pickup(p: Node2D) -> void:
+	if not is_instance_valid(p):
+		return
+	if p.is_inside_tree():
+		remove_child(p)
+	if _pickup_pool.size() < 260:
+		_pickup_pool.append(p)
+	else:
+		p.queue_free()
+
+func _fire(from: Vector2, target: Vector2, dmg: float, el: String, speed: float = 520.0, pierce: int = 0, spread: float = 0.0) -> void:
+	var p: Node2D = _pooled_proj()
+	var dir = (target - from).normalized().rotated(spread)
+	p.reconfigure(from, "res://assets/sprites/bolt.png", DB.ELEMENT_COLORS.get(el, Color.WHITE), 0.7)
+	p.vel = dir * speed
+	p.dmg = dmg
+	p.pierce = pierce
+	p.life = 1.6
+	p.element = el
+	p.aid = _cur_aid
+	p.rotation = dir.angle()
+	projs.append(p)
+
+func _boss_shot(from: Vector2, target: Vector2, dmg: float, speed: float, spread: float) -> Node2D:
+	var p: Node2D = _pooled_proj()
+	p.reconfigure(from, "res://assets/sprites/bolt.png", Color(1.0, 0.4, 0.35), 0.9)
+	var dir = (target - from).normalized().rotated(spread)
+	p.vel = dir * speed
+	p.dmg = dmg * (0.85 + 0.15 * diff)
+	p.hostile = true
+	p.life = 6.0
+	p.radius = 10.0
+	p.rotation = dir.angle()
+	projs.append(p)
+	return p
+
+func _drop(kind: String, pos: Vector2, v: float, ref: String = "", color: Color = Color.WHITE) -> void:
+	if pickups.size() > 260 and kind == "frag":
+		insight_gain(v)
+		return
+	var p: Node2D = _pooled_pickup()
+	p.reconfigure(pos, kind, v, ref, color)
+	pickups.append(p)
+
+func _projectiles(delta: float) -> void:
+	for p in projs.duplicate():
+		if not is_instance_valid(p) or not p.tick(delta, self):
+			projs.erase(p)
+			if is_instance_valid(p):
+				_return_proj(p)
+
+func _pickups(delta: float) -> void:
+	for p in pickups.duplicate():
+		if not p.tick(delta, self):
+			pickups.erase(p)
+			_return_pickup(p)
+
+# ───────── performance: capped spawning ─────────
+
+func _spawn(delta: float) -> void:
+	var cap = Cfg.enemy_cap()
+	spawn_t -= delta
+	elite_t -= delta
+	unique_t -= delta
+	var boss_factor = 0.5 if boss != null else 1.0
+	if spawn_t <= 0.0 and enemies.size() < cap:
+		var interval = maxf(0.14, 0.95 - time / 200.0 - (9 - seq) * 0.045) / (diff * boss_factor)
+		spawn_t = interval
+		var n = 1 + int(time / 90.0) + int((9 - seq) / 3)
+		for i in n:
+			spawn_enemy(_pick_type(), _ring_pos(), false)
+	if elite_t <= 0.0:
+		elite_t = 48.0 - minf(18.0, float(9 - seq) * 3.0)
+		spawn_enemy(_pick_type(), _ring_pos(), true)
+		hud.toast("An elite carries something sealed.", "crown")
+		Sound.play_sfx("telegraph", -6.0)
+	if unique_t <= 0.0:
+		unique_t = 42.0
+		_spawn_unique()
