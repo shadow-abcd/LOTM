@@ -1,9 +1,9 @@
 extends "res://scripts/run/run.gd"
-## Combat depth + performance + VFX-polish + rites layer for the descent. Extends
-## the battle-tested loop without touching it: signature pathway abilities, potions
-## establishing the signature at run start, roaming Formula bearers, object pooling,
-## Phase B combat polish (hit-stop, death bursts, muzzle telegraphs), and Phase D
-## Sequence Rites (a choice of 3 pathway boons at each non-gate Sequence advance).
+## Combat depth + performance + VFX-polish + rites + progression layer for the
+## descent. Extends the battle-tested loop without touching it: signature pathway
+## abilities, potions establishing the signature at run start, roaming Formula
+## bearers, object pooling, Phase B combat polish, Phase D-1 Sequence Rites, and
+## Phase D-2 Pathway Mastery (permanent per-pathway bonuses) + Ascended descents.
 
 const FxPolishS = preload("res://scripts/run/fx_polish.gd")
 const RiteBoons = preload("res://scripts/run/rite_boons.gd")
@@ -17,6 +17,7 @@ var _proj_pool: Array = []
 var _pickup_pool: Array = []
 var _last_seq := 9
 var _rite_open := false
+var ascended := false
 
 func _ready() -> void:
 	super._ready()
@@ -32,7 +33,30 @@ func _ready() -> void:
 		new_fx.z_index = 20
 		add_child(new_fx)
 		fx = new_fx
+	_apply_progression()
 	_connect_potion_abilities()
+
+# ───────── Phase D-2: Mastery + Ascended ─────────
+
+## Applies permanent Mastery bonuses for this pathway and consumes the Ascended
+## flag (set by the Pathways screen) for a tougher, richer descent.
+func _apply_progression() -> void:
+	# Mastery: +2% ability damage (Sequence-5 track), +5% Coins (5,000 kills),
+	# +10% maximum vitality (victory track) — permanent once earned.
+	stats["dmg"] = float(stats.get("dmg", 1.0)) + Store.mastery_dmg_bonus(pid)
+	stats["coin"] = float(stats.get("coin", 1.0)) + Store.mastery_coin_bonus(pid)
+	if Store.mastery_win(pid):
+		player.max_hp = roundf(player.max_hp * 1.10)
+		player.hp = player.max_hp
+	# Ascended: consume the launch flag placed by the Pathways screen.
+	if bool(Store.d.get("pending_ascended", false)):
+		Store.d["pending_ascended"] = false
+		Store.commit()
+		ascended = true
+		rite_dmg += 0.10
+		hud.announce("ASCENDED DESCENT", "The Place remembers more than it should.")
+		Sound.play_sfx("telegraph", -4.0)
+		fx.flash(Color(0.7, 0.3, 0.3), 0.3)
 
 # ───────── signature pathway abilities ─────────
 
@@ -150,8 +174,11 @@ func _timers(delta: float) -> void:
 
 ## Phase D: watch for a plain (non-gate) Sequence advance and offer a Rite.
 ## Gate advances (Sequences 6, 2, 1) spawn their boss as before — no rite there.
+## Sequence 5 arrival also stamps the permanent Mastery seq5 track.
 func _check_rite() -> void:
 	if seq < _last_seq:
+		if seq <= 5:
+			Store.record_mastery_seq5(pid)
 		var was_plain: bool = seq in RITE_SEQS
 		_last_seq = seq
 		if was_plain and not over and not draft_open and not _rite_open:
@@ -224,15 +251,45 @@ func kill_enemy(e: Node2D) -> void:
 		Sound.play_sfx("unlock", -2.0)
 
 ## Phase B: hit-stop + layered death burst on heavy kills (elite, boss, bearer).
+## Phase D-2: Ascended bosses drop an extra Characteristic.
 func _boss_down(e: Node2D) -> void:
 	super._boss_down(e)
 	fx.hitstop(0.09, 0.25)
 	fx.death_burst(e.position, Color(1.0, 0.85, 0.4), true)
+	if ascended:
+		give_characteristic()
 
 func _elite_loot(pos: Vector2) -> void:
 	super._elite_loot(pos)
 	fx.death_burst(pos, Color(1.0, 0.7, 0.3), false)
 	fx.hitstop(0.05, 0.35)
+
+# ───────── Phase D-2: Ascended enemy scaling + rewards ─────────
+
+## Ascended: every enemy is +40% health and +20% damage. Bosses already get the
+## extra Characteristic in _boss_down; reagents double in _drop_reagent.
+func spawn_enemy(id: String, pos: Vector2, elite: bool) -> Node2D:
+	var e: Node2D = super.spawn_enemy(id, pos, elite)
+	if ascended and e != null:
+		e.max_hp = roundf(e.max_hp * 1.4)
+		e.hp = e.max_hp
+		e.dmg = roundf(e.dmg * 1.2)
+	return e
+
+## Ascended: reagents drop twice — the risk pays double.
+func _drop_reagent(pos: Vector2, tiers: Dictionary) -> void:
+	super._drop_reagent(pos, tiers)
+	if ascended:
+		super._drop_reagent(pos + Vector2(randf_range(-24, 24), randf_range(-24, 24)), tiers)
+
+## Phase D-2: record Mastery kills/wins and Ascended results when a run ends.
+func _end(won: bool) -> void:
+	super._end(won)
+	Store.record_mastery_kills(pid, kills)
+	if won:
+		Store.record_mastery_win(pid)
+	if ascended:
+		Store.record_ascended_run(won, 0 if won else seq)
 
 # ───────── object pooling ─────────
 
@@ -332,7 +389,8 @@ func _spawn(delta: float) -> void:
 		for i in n:
 			spawn_enemy(_pick_type(), _ring_pos(), false)
 	if elite_t <= 0.0:
-		elite_t = 48.0 - minf(18.0, float(9 - seq) * 3.0)
+		# Ascended: elites arrive twice as often.
+		elite_t = (48.0 - minf(18.0, float(9 - seq) * 3.0)) * (0.5 if ascended else 1.0)
 		spawn_enemy(_pick_type(), _ring_pos(), true)
 		hud.toast("An elite carries something sealed.", "crown")
 		Sound.play_sfx("telegraph", -6.0)
