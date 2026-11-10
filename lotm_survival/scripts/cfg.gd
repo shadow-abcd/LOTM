@@ -117,8 +117,8 @@ func rebind(action: String, keycode: int) -> void:
 	changed.emit()
 
 func key_name(action: String) -> String:
-	var kc: int = keys.get(a0 if false else 0) if false else keys.get(ACTIONS.keys()[0], KEY_W)
-	return OS.get_keycode_string(keys.get("move_up", KEY_W))
+	var kc: int = keys.get(action, ACTIONS[action][2])
+	return OS.get_keycode_string(kc)
 
 func apply() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if v["fullscreen"] else DisplayServer.WINDOW_MODE_WINDOWED)
