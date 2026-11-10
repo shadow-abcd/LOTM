@@ -94,7 +94,7 @@ func wipe() -> void:
 ## Per-pathway permanent tracks, unlocked by doing:
 ##   seq5      — reached Sequence 5 on this pathway        -> +2% ability damage
 ##   kills5000 — 5,000 lifetime kills on this pathway     -> +5% Coins
-##   win       — won a descent (Sequence 1 boss) on it     -> +1 starting shield
+##   win       — won a descent (Sequence 1 boss) on it     -> +10% maximum vitality
 ## d["mastery"][pid] = {"seq5": bool, "kills": int, "win": bool}
 func mastery_data(pid: String) -> Dictionary:
 	if not (d["mastery"] is Dictionary):
