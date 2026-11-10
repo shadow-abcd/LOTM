@@ -68,10 +68,13 @@ static func _icon_for(kind: String) -> String:
 		"marionette": return "thread"
 		"reveal": return "eye"
 		"dash": return "dash"
-		"fork": return "pathways"
+		"fork": "pathways"
 		"clones": return "moon"
 		"fate": return "fate"
 		"sleep": return "moon"
+		"flame_wave": return "flame"
+		"starfall": return "star"
+		"mirror_world": return "moon"
 		_: return "star"
 
 func _apply(pid: String, aid: String) -> void:
