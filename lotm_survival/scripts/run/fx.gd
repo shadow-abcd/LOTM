@@ -86,7 +86,7 @@ func zap(a: Vector2, b: Vector2, color: Color) -> void:
 		var pt = a.lerp(b, t)
 		if i > 0 and i < steps:
 			pt += Vector2(randf_range(-10, 10), randf_range(-10, 10))
-		l.points = pts
+		pts.append(pt)
 	l.points = pts
 	l.width = 4.0
 	l.default_color = color
