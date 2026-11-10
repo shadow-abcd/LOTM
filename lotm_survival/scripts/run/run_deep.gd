@@ -87,7 +87,7 @@ func _cast_signature(a: Dictionary) -> void:
 			var r := minf(560.0, 300.0 + 30.0 * l)
 			fx.ring(c, col, r, 0.7)
 			fx.glow_pop(c, col, r * 0.9, 0.5)
-			fx.burst(c, col, 26, r, 0.8, 0 (0.3)
+			fx.burst(c, col, 26, r, 0.8, 0.3)
 			Sound.play_sfx("cast_pulse", -2.0)
 			var hits := 0
 			for e in enemies_near(c, r):
