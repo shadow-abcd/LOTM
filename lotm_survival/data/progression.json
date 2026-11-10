@@ -6,15 +6,15 @@
      "id": "dawn_pyre",
      "name": "Pyre Vows",
      "icon": "flame",
-     "desc": "Your abilities scorch: all ability damage applies a short burn to enemies struck.",
-     "hint": "Burn stacks with every hit — keep enemies inside your aura."
+     "desc": "+10% ability damage. Your blows smolder long after they land.",
+     "hint": "A straightforward vow of fire — burn brighter, burn longer."
     },
     {
      "id": "dawn_crown",
      "name": "Crown of Cinders",
      "icon": "crown",
-     "desc": "Elites and bosses you mark take 15% more damage from you.",
-     "hint": "Pairs with your Pathway mark — finish the marked first."
+     "desc": "+5% ability damage, and your wounds heal 10% faster from hearts.",
+     "hint": "The crown weighs little and answers quickly."
     }
    ],
    "5": [
@@ -22,15 +22,15 @@
      "id": "dawn_lantern",
      "name": "Lantern of the Sun",
      "icon": "lamp",
-     "desc": "Vitality you restore above your maximum is stored (up to 30) and shields you.",
-     "hint": "Overheal becomes survival — stack it before gate fights."
+     "desc": "+20 maximum vitality, restored now.",
+     "hint": "Carry a bigger lantern into the deeper dark."
     },
     {
      "id": "dawn_march",
      "name": "War March",
      "icon": "sword",
-     "desc": "Every 10th cast strikes twice at full power.",
-     "hint": "Watch your cast rhythm — big hits land on the tenth beat."
+     "desc": "+10% cast speed — the procession does not wait.",
+     "hint": "More casts, more often, all descent long."
     }
    ],
    "2": [
@@ -38,15 +38,15 @@
      "id": "dawn_verdict",
      "name": "Final Verdict",
      "icon": "sigil",
-     "desc": "Your signature ability also detonates all burns on enemies it touches.",
-     "hint": "Flame of Purification becomes the ender — bank burns, then purify."
+     "desc": "+10% ability damage, and the sigils strike wider.",
+     "hint": "The verdict is read once; it covers everyone."
     },
     {
      "id": "dawn_unconquered",
      "name": "The Unconquered Sun",
      "icon": "star",
-     "desc": "While at full vitality, all ability damage +25%.",
-     "hint": "Perfection demands perfection — guard your health bar."
+     "desc": "+10% ability damage while the sun still stands with you.",
+     "hint": "Stand unbroken and the light answers."
     }
    ]
   },
@@ -56,14 +56,14 @@
      "id": "wand_glyph",
      "name": "Glyph Memory",
      "icon": "eye",
-     "desc": "Chain abilities reach 2 more enemies and never lose damage over distance.",
-     "hint": "Your threads bind wider crowds — fish for chains in packs."
+     "desc": "+5% cast speed — the glyphs write themselves faster now.",
+     "hint": "A well-read scholar is a fast scholar."
     },
     {
      "id": "wand_veil",
      "name": "Thrice-Veiled",
      "icon": "shield",
-     "desc": "Tome Shield holds one extra ward and recharges 20% faster.",
+     "desc": "Tome Shield holds one extra ward, granted now.",
      "hint": "A scholar never travels with one page of defence."
     }
    ],
@@ -72,15 +72,15 @@
      "id": "wand_star",
      "name": "Star Map Spread",
      "icon": "star",
-     "desc": "Reveal also draws in coins and reagents near the edge.",
-     "hint": "The map shows wealth, not just wisdom."
+     "desc": "+25% pickup reach — the map shows what glitters.",
+     "hint": "Fragments, coins and reagents drift toward you from farther."
     },
     {
      "id": "wand_quill",
      "name": "Quill of Foretelling",
      "icon": "fate",
-     "desc": "+1 Fate reroll at every draft while you hold fewer than six abilities.",
-     "hint": "Write and rewrite — until your book is full."
+     "desc": "+2 Fate rerolls for this descent.",
+     "hint": "Write and rewrite — until the book is full."
     }
    ],
    "2": [
@@ -88,15 +88,15 @@
      "id": "wand_hidden",
      "name": "The Hidden World",
      "icon": "moon",
-     "desc": "Veilstep grants brief invulnerability and leaves a decoy echo.",
-     "hint": "Step out of the world — let the world swing at your echo."
+     "desc": "Veilstep recovers 25% faster.",
+     "hint": "Step out of the world more often."
     },
     {
      "id": "wand_allsage",
      "name": "The Allsage",
      "icon": "pathways",
-     "desc": "Every 4th-cast bonus is replaced by every 3rd cast.",
-     "hint": "The forbidden name speaks more often now."
+     "desc": "+8% cast speed — the forbidden name comes easier.",
+     "hint": "The rhythm of the 4th-cast surge carries you."
     }
    ]
   },
@@ -106,8 +106,8 @@
      "id": "seer_lull",
      "name": "Lullaby Depth",
      "icon": "moon",
-     "desc": "Sleep effects hold 50% longer and spread to one nearby enemy on landing.",
-     "hint": "The song carries through the crowd — open with sleep."
+     "desc": "+5% cast speed — the song reaches further each verse.",
+     "hint": "Open with sleep; the crowd conducts itself."
     },
     {
      "id": "seer_mirror",
@@ -122,14 +122,14 @@
      "id": "seer_siren",
      "name": "Siren Chorus",
      "icon": "audio",
-     "desc": "While 5+ enemies sleep nearby, all your ability damage +20%.",
-     "hint": "Conduct the choir — a sleeping field is a dead field."
+     "desc": "+8% ability damage while the choir sings.",
+     "hint": "Conduct the field — every sleeping ear is yours."
     },
     {
      "id": "seer_agony",
      "name": "Agony Bond",
      "icon": "storm",
-     "desc": "Chains bounce 2 extra times and slow everything they touch.",
+     "desc": "+5% cast speed — the bond tightens between victims.",
      "hint": "Pain that moves is pain that multiplies."
     }
    ],
@@ -138,14 +138,14 @@
      "id": "seer_world",
      "name": "World as Mirror",
      "icon": "gem",
-     "desc": "Mirror World detonates stored wounds at triple value and freezes twice as long.",
+     "desc": "+10% ability damage inside the reflected world.",
      "hint": "Your signature becomes the answer to everything you endured."
     },
     {
      "id": "seer_apocalypse",
      "name": "Apocalypse Whisper",
      "icon": "crown",
-     "desc": "Enemies that die asleep deal 30% of your stored wound damage to neighbours.",
+     "desc": "+8% ability damage while the last verse approaches.",
      "hint": "End the song only when everything is sleeping."
     }
    ]
