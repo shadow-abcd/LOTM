@@ -68,7 +68,7 @@ static func _icon_for(kind: String) -> String:
 		"marionette": return "thread"
 		"reveal": return "eye"
 		"dash": return "dash"
-		"fork": "pathways"
+		"fork": return "pathways"
 		"clones": return "moon"
 		"fate": return "fate"
 		"sleep": return "moon"
