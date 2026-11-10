@@ -9,7 +9,7 @@ const SECTIONS := [
 	["desk", "Desk", "desk", "res://scripts/sections/desk.gd"],
 	["levels", "Levels", "levelup", "res://scripts/sections/levels.gd"],
 	["chronicle", "Chronicle", "codex", "res://scripts/sections/chronicle.gd"],
-	["grimoire", "Grimoire", "grimoire", "res://scripts/sections/sections_placeholder.gd"],
+	["grimoire", "Grimoire", "grimoire", "res://scripts/sections/grimoire.gd"],
 	["cabinet", "Cabinet", "cabinet", "res://scripts/sections/cabinet.gd"],
 	["ascent", "Ascent", "star", "res://scripts/sections/ascent.gd"],
 	["altar", "Altar", "altar", "res://scripts/sections/altar.gd"],
