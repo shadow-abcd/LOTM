@@ -72,6 +72,9 @@ static func _icon_for(kind: String) -> String:
 		"clones": return "moon"
 		"fate": return "fate"
 		"sleep": return "moon"
+		"flame_wave": return "flame"
+		"starfall": return "star"
+		"mirror_world": return "moon"
 		_: return "star"
 
 func _apply(pid: String, aid: String) -> void:

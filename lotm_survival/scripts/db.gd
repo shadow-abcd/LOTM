@@ -117,6 +117,12 @@ func element_for(pid: String, kind: String) -> String:
 		return "storm"
 	if kind == "orbit":
 		return "steel"
+	if kind == "flame_wave":
+		return "ember"
+	if kind == "starfall":
+		return "storm"
+	if kind == "mirror_world":
+		return "gloom"
 	match pid:
 		"dawnbringer": return "ember"
 		"wanderer": return "gloom"

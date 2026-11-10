@@ -89,6 +89,15 @@
    2.7,
    "unconquered_sun",
    "The final form answers with a powerful pulse."
+  ],
+  [
+   "flame_of_purification",
+   "Flame of Purification",
+   "flame_wave",
+   130,
+   6.0,
+   "flame_of_purification",
+   "SIGNATURE: a ring of purifying fire expands, burning everything it touches and restoring your vitality per enemy scorched."
   ]
  ],
  "wanderer": [
@@ -181,6 +190,15 @@
    2.8,
    "unknowable",
    "A hidden world briefly opens around you."
+  ],
+  [
+   "starfall_judgment",
+   "Starfall Judgment",
+   "starfall",
+   95,
+   4.5,
+   "starfall_judgment",
+   "SIGNATURE: falling stars bombard the crowd around you, each impact bursting into constellations."
   ]
  ],
  "hollow_seer": [
@@ -273,6 +291,15 @@
    2.5,
    "hollow_dreamer",
    "The final form answers with a pulse."
+  ],
+  [
+   "mirror_world",
+   "Mirror World",
+   "mirror_world",
+   0,
+   12,
+   "mirror_world",
+   "SIGNATURE: pull the crowd into the Mirror World — everything inside is frozen, marked and struck by a ring of shards; your stored wounds detonate."
   ]
  ]
 }
