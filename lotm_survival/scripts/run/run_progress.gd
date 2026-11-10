@@ -12,6 +12,35 @@ var stored_wound_scale := 0.3
 func _ready() -> void:
 	super._ready()
 	_apply_mastery_boons()
+	_setup_ascension()
+
+## Ascended descent: steeper pressure, richer rewards. Enabled from the Ascent tab.
+func _setup_ascension() -> void:
+	if not bool(Store.d.get("ascend_enabled", false)):
+		return
+	var asc: Dictionary = DB.ascension()
+	if asc.is_empty():
+		return
+	var steps: Array = asc.get("difficulty_steps", [])
+	if steps.is_empty():
+		return
+	var tier: int = clampi(int(Store.d.get("ascend_tier", 0)), 0, steps.size() - 1)
+	_ascended = true
+	_ascend_tier = tier + 1
+	diff = float(diff) * float(steps[tier])
+	var rewards: Dictionary = asc.get("rewards", {})
+	stats["coin"] = float(stats["coin"]) * float(rewards.get("coin_mult", 1.0))
+	var entry := int(asc.get("entry_cost_diamonds", 25))
+	if not Store.spend("diamonds", entry):
+		Store.d["ascend_enabled"] = false
+		Store.commit()
+		_ascended = false
+		_ascend_tier = 0
+		return
+	Store.d["ascend_tier"] = _ascend_tier
+	Store.commit()
+	hud.toast("Ascended descent · Tier %d — the Place leans harder on you." % _ascend_tier, "star")
+	Sound.play_sfx("boss_appear", -8.0)
 
 ## Called by the rite overlay: apply the chosen rite to this descent.
 func apply_sequence_rite(rite: Dictionary) -> void:
