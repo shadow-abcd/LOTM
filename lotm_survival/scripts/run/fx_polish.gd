@@ -3,17 +3,15 @@ extends "res://scripts/run/fx.gd"
 ## elites/bosses/bearers, and boss muzzle telegraphs. Extends the battle-tested
 ## FX rig without touching it; run.gd/fx.gd stay byte-identical to main.
 
-var _hitstop_t := 0.0
+var _hitstop_until_ms := 0
 var _hitstop_scale := 1.0
 
-func _process(delta: float) -> void:
-	# Count the hit-stop down in real time (this node is NOT paused by it),
-	# then restore normal time scale.
-	if _hitstop_t > 0.0:
-		_hitstop_t -= delta
-		if _hitstop_t <= 0.0:
-			Engine.time_scale = 1.0
-			_hitstop_scale = 1.0
+func _process(_delta: float) -> void:
+	# Engine.time_scale also scales _process delta, so count in real time.
+	if _hitstop_until_ms > 0 and Time.get_ticks_msec() >= _hitstop_until_ms:
+		_hitstop_until_ms = 0
+		Engine.time_scale = 1.0
+		_hitstop_scale = 1.0
 
 ## Brief time-scale dip right after big moments. Skipped entirely in performance
 ## mode; softened under reduce_flashes.
@@ -26,7 +24,7 @@ func hitstop(duration: float = 0.06, scale: float = 0.35) -> void:
 		scale = maxf(scale, 0.6)
 	Engine.time_scale = scale
 	_hitstop_scale = scale
-	_hitstop_t = duration
+	_hitstop_until_ms = Time.get_ticks_msec() + int(duration * 1000.0)
 
 ## Layered death burst: white core flash + colored burst + expanding ring.
 ## Used for elites, bosses, and Formula bearers.
