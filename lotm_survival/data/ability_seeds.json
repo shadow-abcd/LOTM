@@ -82,6 +82,15 @@
    "A spear of light strikes the ground beneath an enemy."
   ],
   [
+   "flame_of_purification",
+   "Flame of Purification",
+   "flame_wave",
+   130,
+   6.0,
+   "flame_of_purification",
+   "SIGNATURE: a ring of purifying fire expands, burns all it touches, and heals you per enemy hit."
+  ],
+  [
    "unconquered_sun",
    "Duel of Wills",
    "pulse",
@@ -163,6 +172,15 @@
    1.6,
    "crowned_shadow",
    "Echoes of yourself fire at nearby enemies."
+  ],
+  [
+   "starfall_judgment",
+   "Starfall Judgment",
+   "starfall",
+   95,
+   4.5,
+   "starfall_judgment",
+   "SIGNATURE: falling stars bombard the crowd around you, each impact bursts in constellations."
   ],
   [
    "fate_card",
@@ -255,6 +273,15 @@
    3,
    "dream_sigil",
    "A field of ruin blooms beneath an enemy."
+  ],
+  [
+   "mirror_world",
+   "Mirror World",
+   "mirror_world",
+   0,
+   12,
+   "mirror_world",
+   "SIGNATURE: pull all enemies into the Mirror World — a ring of shards strikes everything inside, and stored wounds detonate."
   ],
   [
    "mind_spike",
