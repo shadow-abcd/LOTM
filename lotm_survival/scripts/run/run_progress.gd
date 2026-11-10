@@ -7,18 +7,20 @@ const RiteSelectS = preload("res://scripts/run/rite_select.gd")
 var _rites_taken: Dictionary = {}
 var _ascended := false
 var _ascend_tier := 0
+var stored_wound_scale := 0.3
 
 func _ready() -> void:
 	super._ready()
+	_apply_mastery_boons()
 
 ## Called by the rite overlay: apply the chosen rite to this descent.
 func apply_sequence_rite(rite: Dictionary) -> void:
 	_rites_taken[str(rite["id"])] = true
+	get_tree().paused = false
 	var rid: String = str(rite["id"])
 	match rid:
 		"dawn_pyre":
-			rite_dmg += 0.05
-			rite_dmg += 0.05
+			rite_dmg += 0.10
 		"dawn_crown":
 			stats["dmg"] = float(stats["dmg"]) * 1.05
 		"dawn_lantern":
@@ -47,7 +49,7 @@ func apply_sequence_rite(rite: Dictionary) -> void:
 		"seer_lull":
 			stats["cast"] = float(stats["cast"]) * 1.05
 		"seer_mirror":
-			stored_wound_scale = 0.4
+			stored_wound_scale = 0.45
 		"seer_siren":
 			rite_dmg += 0.08
 		"seer_agony":
@@ -63,15 +65,36 @@ func apply_sequence_rite(rite: Dictionary) -> void:
 	Sound.play_sfx("gate_open", -4.0)
 	hud.toast("%s — the vow is kept." % str(rite["name"]), str(rite["icon"]))
 
-var stored_wound_scale := 0.3
+## Account-wide mastery boons from lifetime kills, applied at descent start.
+func _apply_mastery_boons() -> void:
+	var tier := DB.mastery_tier(pid, int(Store.d["kills"]))
+	if tier <= 0:
+		return
+	var m: Dictionary = DB.mastery(pid)
+	var tiers: Array = m.get("tiers", [])
+	for i in mini(tier, tiers.size()):
+		var boon: String = str(tiers[i].get("boon", ""))
+		match boon:
+			"+5% ability damage": rite_dmg += 0.05
+			"+10% ability damage": rite_dmg += 0.10
+			"+15% ability damage": rite_dmg += 0.15
+			"+1 Fate reroll each descent": rerolls += 1
+			"+5% Insight gained": stats["insight"] = float(stats["insight"]) * 1.05
+			"+10% Coins found": stats["coin"] = float(stats["coin"]) * 1.10
+			"+8% cast speed": stats["cast"] = float(stats["cast"]) * 1.08
+			"Drafts offer one extra choice": stats["choices"] = int(stats["choices"]) + 1
+			_:
+				pass
+	hud.toast("%s · Tier %d — the pathway remembers." % [str(m.get("name", "")), tier], "star")
 
 ## Hook into the existing Sequence-advance moment: offer rites at 8 / 5 / 2.
 func _sequence_check() -> void:
 	super._sequence_check()
 	if not over and seq in [8, 5, 2] and not _rites_taken.has("seq_%d" % seq):
-		_rites_taken["seq_%d" % seq] = true
 		var rites: Array = DB.sequence_rites(pid, seq)
 		if not rites.is_empty():
+			_rites_taken["seq_%d" % seq] = true
+			get_tree().paused = true
 			var overlay = RiteSelectS.new()
 			overlay.run = self
 			hud.add_child(overlay)
