@@ -1,10 +1,12 @@
 extends Node
 ## Persistent save data (user://save.json) + ownership rules.
-## When Cfg "open_gates" (Lift the Forbids) is on, every lock in the game is open.
+## Versioned saves: _migrate() upgrades old saves in place, so a format change
+## never corrupts existing progress. When Cfg "open_gates" is on, every lock is open.
 
 signal changed
 
 const PATH := "user://save.json"
+const SAVE_VERSION := 2
 const UPGRADES := {
 	"vitality": ["Vitality", "heart", "+10 starting vitality per rank"],
 	"might": ["Might", "sword", "+5% ability damage per rank"],
@@ -18,13 +20,12 @@ var d: Dictionary = {}
 func _ready() -> void:
 	d = _defaults()
 	_load()
-	if not d.has("reputation"):
-		d["reputation"] = {}
-	if not d.has("relationships"):
-		d["relationships"] = {}
+	_migrate()
+	commit()
 
 func _defaults() -> Dictionary:
 	return {
+		"version": SAVE_VERSION,
 		"coins": 600, "diamonds": 120, "pathway": "dawnbringer",
 		"unlocked_pathways": ["dawnbringer"],
 		"owned_artifacts": ["cold_iron_ring", "ash_compass", "tallow_candle"],
@@ -37,6 +38,7 @@ func _defaults() -> Dictionary:
 		"fail_streak": 0, "weekly": {"week": "", "kills": 0, "best_seq": 9, "claimed": []},
 		"codex": [], "auction_bought": [], "inferer_used": 0,
 		"reputation": {}, "relationships": {},
+		"story_flags": {},
 	}
 
 func _load() -> void:
@@ -49,6 +51,19 @@ func _load() -> void:
 	if parsed is Dictionary:
 		for k in parsed.keys():
 			d[k] = parsed[k]
+
+## Runs once at load: stamps missing containers with safe defaults and records the
+## save format version. Each future format change adds one step here.
+func _migrate() -> void:
+	if not d.has("story_flags"):
+		d["story_flags"] = {}
+	if not d.has("reputation"):
+		d["reputation"] = {}
+	if not d.has("relationships"):
+		d["relationships"] = {}
+	if not d.has("seen") or not (d["seen"] is Dictionary):
+		d["seen"] = {"artifacts": [], "charms": []}
+	d["version"] = SAVE_VERSION
 
 func save() -> void:
 	var f = FileAccess.open(PATH, FileAccess.WRITE)
@@ -358,8 +373,10 @@ func unequip(kind: String, id: String) -> void:
 	Sound.play_sfx("unequip")
 	commit()
 
+## Weekly key: Monday, UTC. Derived from unix time alone — no-argument Time calls,
+## so it parses on every Godot 4.3 build and is timezone-stable.
 func week_key() -> String:
-	var t = Time.get_datetime_dict_from_system(true)
-	var unix = Time.get_unix_time_from_system(true)
-	var monday: float = floor(unix / 86400.0) - float((int(t["weekday"]) + 6) % 7)
+	var unix: float = Time.get_unix_time_from_system()
+	var day_index: int = int(floor(unix / 86400.0 + 4.0)) % 7
+	var monday: float = floor(unix / 86400.0) - float(day_index)
 	return str(int(monday))

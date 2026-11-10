@@ -1,5 +1,7 @@
 extends Node
 ## Settings (Audio / Graphics / Controls / Gameplay / Accessibility) + input map.
+## Performance presets keep low-end phones smooth: they cap enemy count, halve
+## particles, tone down screen shake, and skip damage numbers.
 
 signal changed
 
@@ -10,6 +12,7 @@ const DEFAULTS := {
 	"show_fps": false, "ui_scale": 1.0, "touch_controls": false, "open_gates": false,
 	"difficulty": 1, "pause_on_focus_loss": true, "vibration": true,
 	"reduce_flashes": false, "high_contrast": false, "big_text": false, "colorblind": false,
+	"performance_mode": false,
 }
 ## action -> [label, icon, default physical keycode]
 const ACTIONS := {
@@ -77,6 +80,18 @@ func reset_defaults() -> void:
 	save()
 	changed.emit()
 
+## One-tap low-end preset: caps the crowd, halves particles, softens shake.
+## Individual settings stay adjustable afterwards.
+func apply_performance_mode(on: bool) -> void:
+	if on:
+		v["particles"] = 0
+		v["screen_shake"] = 0.4
+		v["damage_numbers"] = false
+	v["performance_mode"] = on
+	apply()
+	save()
+	changed.emit()
+
 func _setup_input() -> void:
 	for a in ACTIONS.keys():
 		if InputMap.has_action(a):
@@ -111,6 +126,10 @@ func apply() -> void:
 	var root = get_tree().root if get_tree() != null else null
 	if root != null:
 		root.content_scale_factor = float(v["ui_scale"]) * (1.15 if v["big_text"] else 1.0)
+
+## Enemy cap for the descent: performance mode halves the crowd.
+func enemy_cap() -> int:
+	return 80 if bool(v.get("performance_mode", false)) else (240 if int(v.get("particles", 2)) > 0 else 160)
 
 func gate_open() -> bool:
 	return bool(v["open_gates"])

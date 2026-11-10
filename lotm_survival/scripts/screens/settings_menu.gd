@@ -110,6 +110,8 @@ func _graphics() -> void:
 	_row("timer", "V-Sync", UI.toggle("", "", bool(Cfg.get_v("vsync")), func(on): Cfg.set_v("vsync", on)))
 	_row("info", "Show FPS", UI.toggle("", "", bool(Cfg.get_v("show_fps")), func(on): Cfg.set_v("show_fps", on)))
 	_row("graphics", "UI scale", UI.slider(float(Cfg.get_v("ui_scale")), func(v): Cfg.set_v("ui_scale", v), 0.75, 1.5, 0.05))
+	_section("Performance")
+	_row("bolt", "Performance mode", UI.toggle("", "", bool(Cfg.get_v("performance_mode")), func(on): Cfg.apply_performance_mode(on)), "Caps the crowd, halts damage numbers, softens shake — for weaker phones")
 	_section("Effects")
 	var opt = OptionButton.new()
 	for n in ["Low", "Medium", "High"]:
