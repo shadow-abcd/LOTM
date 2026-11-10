@@ -1,17 +1,22 @@
 extends "res://scripts/run/run.gd"
-## Combat depth + performance + VFX-polish layer for the descent. Extends the
-## battle-tested loop without touching it: signature pathway abilities, potions
-## establishing the signature at run start, roaming Formula bearers, object
-## pooling for projectiles & pickups, and Phase B combat polish (hit-stop,
-## layered death bursts, boss muzzle telegraphs).
+## Combat depth + performance + VFX-polish + rites layer for the descent. Extends
+## the battle-tested loop without touching it: signature pathway abilities, potions
+## establishing the signature at run start, roaming Formula bearers, object pooling,
+## Phase B combat polish (hit-stop, death bursts, muzzle telegraphs), and Phase D
+## Sequence Rites (a choice of 3 pathway boons at each non-gate Sequence advance).
 
 const FxPolishS = preload("res://scripts/run/fx_polish.gd")
+const RiteBoons = preload("res://scripts/run/rite_boons.gd")
 
 const SIGNATURE_KINDS := ["flame_wave", "starfall", "mirror_world"]
+## Plain Sequence advances (no Formula gate, no boss) — these offer a Rite.
+const RITE_SEQS := [8, 7, 5, 4, 3]
 
 var bearer_t := 95.0
 var _proj_pool: Array = []
 var _pickup_pool: Array = []
+var _last_seq := 9
+var _rite_open := false
 
 func _ready() -> void:
 	super._ready()
@@ -141,6 +146,56 @@ func _timers(delta: float) -> void:
 	if bearer_t <= 0.0 and boss == null and not over:
 		bearer_t = 95.0
 		_spawn_formula_bearer()
+	_check_rite()
+
+## Phase D: watch for a plain (non-gate) Sequence advance and offer a Rite.
+## Gate advances (Sequences 6, 2, 1) spawn their boss as before — no rite there.
+func _check_rite() -> void:
+	if seq < _last_seq:
+		var was_plain: bool = seq in RITE_SEQS
+		_last_seq = seq
+		if was_plain and not over and not draft_open and not _rite_open:
+			_open_rite()
+	elif seq > _last_seq:
+		_last_seq = seq
+
+func _open_rite() -> void:
+	_rite_open = true
+	get_tree().paused = true
+	Sound.play_sfx("gate_open", -4.0)
+	var panel := Control.new()
+	panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.name = "RitePanel"
+	var dim := ColorRect.new()
+	dim.color = Color(0.03, 0.02, 0.05, 0.78)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(center)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	center.add_child(box)
+	box.add_child(UI.label("Sequence %d Rite" % seq, 24, UI.GOLD, true))
+	box.add_child(UI.wrap_label("The Pathway stirs. Choose one boon for the rest of this descent.", 16, UI.TEXT_DIM))
+	for opt in RiteBoons.options_for(pid, 3):
+		var b := Button.new()
+		b.text = " %s — %s" % [str(opt["name"]), str(opt["desc"])]
+		b.custom_minimum_size = Vector2(560, 58)
+		b.pressed.connect(_choose_rite.bind(panel, str(opt["id"]), str(opt["name"])))
+		box.add_child(b)
+	hud.add_child(panel)
+
+func _choose_rite(panel: Control, id: String, name: String) -> void:
+	RiteBoons.apply(self, id)
+	Sound.play_sfx("equip")
+	hud.toast("Rite accepted: %s" % name, "scroll")
+	panel.queue_free()
+	_rite_open = false
+	get_tree().paused = false
+	fx.flash(Color(1.0, 0.9, 0.6), 0.25)
+	fx.ring(player_center(), Color(1.0, 0.9, 0.6), 380.0, 0.7)
 
 func _spawn_formula_bearer() -> void:
 	var left: Array = Store.undiscovered_formulas(pid)
