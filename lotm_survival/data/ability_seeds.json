@@ -82,15 +82,6 @@
    "A spear of light strikes the ground beneath an enemy."
   ],
   [
-   "flame_of_purification",
-   "Flame of Purification",
-   "flame_wave",
-   130,
-   6.0,
-   "flame_of_purification",
-   "SIGNATURE: a ring of purifying fire expands, burns all it touches, and heals you per enemy hit."
-  ],
-  [
    "unconquered_sun",
    "Duel of Wills",
    "pulse",
@@ -98,6 +89,15 @@
    2.7,
    "unconquered_sun",
    "The final form answers with a powerful pulse."
+  ],
+  [
+   "flame_of_purification",
+   "Flame of Purification",
+   "flame_wave",
+   130,
+   6.0,
+   "flame_of_purification",
+   "SIGNATURE: a ring of purifying fire expands, burning everything it touches and restoring your vitality per enemy scorched."
   ]
  ],
  "wanderer": [
@@ -174,15 +174,6 @@
    "Echoes of yourself fire at nearby enemies."
   ],
   [
-   "starfall_judgment",
-   "Starfall Judgment",
-   "starfall",
-   95,
-   4.5,
-   "starfall_judgment",
-   "SIGNATURE: falling stars bombard the crowd around you, each impact bursts in constellations."
-  ],
-  [
    "fate_card",
    "Allsage",
    "fate",
@@ -199,6 +190,15 @@
    2.8,
    "unknowable",
    "A hidden world briefly opens around you."
+  ],
+  [
+   "starfall_judgment",
+   "Starfall Judgment",
+   "starfall",
+   95,
+   4.5,
+   "starfall_judgment",
+   "SIGNATURE: falling stars bombard the crowd around you, each impact bursting into constellations."
   ]
  ],
  "hollow_seer": [
@@ -275,15 +275,6 @@
    "A field of ruin blooms beneath an enemy."
   ],
   [
-   "mirror_world",
-   "Mirror World",
-   "mirror_world",
-   0,
-   12,
-   "mirror_world",
-   "SIGNATURE: pull all enemies into the Mirror World — a ring of shards strikes everything inside, and stored wounds detonate."
-  ],
-  [
    "mind_spike",
    "Sovereign Decree",
    "shot",
@@ -300,6 +291,15 @@
    2.5,
    "hollow_dreamer",
    "The final form answers with a pulse."
+  ],
+  [
+   "mirror_world",
+   "Mirror World",
+   "mirror_world",
+   0,
+   12,
+   "mirror_world",
+   "SIGNATURE: pull the crowd into the Mirror World — everything inside is frozen, marked and struck by a ring of shards; your stored wounds detonate."
   ]
  ]
 }
