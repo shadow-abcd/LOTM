@@ -102,9 +102,9 @@ func place_for(pid: String, seq: int) -> Dictionary:
 	if pid == "dawnbringer":
 		band = {9: "cinder_wold", 8: "cinder_wold", 7: "cinder_wold", 6: "cinder_wold", 5: "drowned_stair", 4: "drowned_stair", 3: "drowned_stair", 2: "lantern_field", 1: "lantern_field", 0: "lantern_field"}
 	elif pid == "wanderer":
-		band = {9: "salt_seminary", 8: "salt_seminary", 8.5: "salt_seminary", 7: "salt_seminary", 6: "salt_seminary", 5: "salt_seminary", 4: "salt_seminary", 3: "slow_orchard", 2: "slow_orchard", 1: "slow_orchard", 0: "lantern_field"}
+		band = {9: "salt_seminary", 8: "salt_seminary", 7: "salt_seminary", 6: "salt_seminary", 5: "salt_seminary", 4: "salt_seminary", 3: "slow_orchard", 2: "slow_orchard", 1: "slow_orchard", 0: "lantern_field"}
 	else:
-		band = {9: "glass_verge", 8: " ringed"}
+		band = {9: "glass_verge", 8: "glass_verge", 7: "glass_verge", 6: "glass_verge", 5: "glass_verge", 4: "glass_verge", 3: "lantern_field", 2: "lantern_field", 1: "lantern_field", 0: "lantern_field"}
 	return place(band.get(clampi(seq, 0, 9), "cinder_wold"))
 
 func icon_for_glyph(g: String) -> String:
