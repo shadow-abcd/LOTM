@@ -64,6 +64,7 @@ func _brew_vfx() -> void:
 	var vp = get_viewport()
 	if vp == null:
 		return
+	var vs: Vector2 = vp.get_visible_rect().size
 	var overlay = Control.new()
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -73,7 +74,7 @@ func _brew_vfx() -> void:
 		bub.texture = UI.tex("res://assets/sprites/glow.png")
 		bub.modulate = Color(0.95, 0.75, 0.35, 0.85)
 		bub.scale = Vector2(0.2, 0.2) * (1.0 + 0.25 * float(i % 3))
-		bub.position = Vector2(overlay.size.x * 0.5 + (i - 2.5) * 24.0, overlay.size.y * 0.5)
+		bub.position = Vector2(vs.x * 0.5 + (i - 2.5) * 24.0, vs.y * 0.5)
 		overlay.add_child(bub)
 		var tw = bub.create_tween()
 		tw.set_parallel(true)
