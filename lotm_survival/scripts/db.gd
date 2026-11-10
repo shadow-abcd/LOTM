@@ -25,6 +25,7 @@ var rituals: Array = []
 var formulas: Array = []
 var weekly: Array = []
 var drops: Dictionary = {}
+var progression: Dictionary = {}
 
 func _ready() -> void:
 	pathways = _load("pathways")
@@ -43,6 +44,9 @@ func _ready() -> void:
 	var dt = _load("drop_tables")
 	if dt is Dictionary:
 		drops = dt
+	var pg = _load("progression")
+	if pg is Dictionary:
+		progression = pg
 
 func _load(n: String):
 	var f = FileAccess.open("res://data/%s.json" % n, FileAccess.READ)
@@ -70,6 +74,30 @@ func reagent(id: String) -> Dictionary: return _find(reagents, ALIASES.get(id, i
 func ritual(id: String) -> Dictionary: return _find(rituals, id)
 func formula(id: String) -> Dictionary: return _find(formulas, id)
 func region_enemy(id: String) -> Dictionary: return _find(region_enemies, id)
+
+# ── progression (Phase D) ──
+## Rites offered when crossing Sequence 8 / 5 / 2. Returns [{id,name,icon,desc,hint}].
+func sequence_rites(pid: String, seq: int) -> Array:
+	var tbl: Dictionary = progression.get("sequence_rites", {}).get(pid, {})
+	return tbl.get(str(seq), [])
+
+## Pathway mastery tree: kills-based account-wide boons. Returns the pathway's tree {}.
+func mastery(pid: String) -> Dictionary:
+	return progression.get("mastery", {}).get(pid, {})
+
+## Mastery tier reached for a kill count. Tier 0 = none.
+func mastery_tier(pid: String, kills: int) -> int:
+	var m: Dictionary = mastery(pid)
+	var tiers: Array = m.get("tiers", [])
+	var t := 0
+	for i in tiers.size():
+		if kills >= int(tiers[i].get("need_kills", 0)):
+			t = i + 1
+	return t
+
+## Ascended descent configuration.
+func ascension() -> Dictionary:
+	return progression.get("ascension", {})
 
 func abilities_of(pid: String) -> Array:
 	var out: Array = []
