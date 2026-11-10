@@ -1,8 +1,11 @@
 extends "res://scripts/run/run.gd"
-## Combat depth + performance layer for the descent. Extends the battle-tested
-## loop without touching it: signature pathway abilities, potions establishing
-## the signature at run start, roaming Formula bearers, and object pooling for
-## projectiles & pickups (no per-shot allocations — the biggest mobile win).
+## Combat depth + performance + VFX-polish layer for the descent. Extends the
+## battle-tested loop without touching it: signature pathway abilities, potions
+## establishing the signature at run start, roaming Formula bearers, object
+## pooling for projectiles & pickups, and Phase B combat polish (hit-stop,
+## layered death bursts, boss muzzle telegraphs).
+
+const FxPolishS = preload("res://scripts/run/fx_polish.gd")
 
 const SIGNATURE_KINDS := ["flame_wave", "starfall", "mirror_world"]
 
@@ -12,6 +15,18 @@ var _pickup_pool: Array = []
 
 func _ready() -> void:
 	super._ready()
+	# Phase B: swap in the polished FX layer (hit-stop, death bursts, telegraphs).
+	if fx != null and fx is FxPolishS:
+		pass
+	else:
+		var old_fx = fx
+		remove_child(old_fx)
+		old_fx.queue_free()
+		var new_fx: Node2D = FxPolishS.new()
+		new_fx.run = self
+		new_fx.z_index = 20
+		add_child(new_fx)
+		fx = new_fx
 	_connect_potion_abilities()
 
 # ───────── signature pathway abilities ─────────
@@ -72,8 +87,7 @@ func _cast_signature(a: Dictionary) -> void:
 			var r := minf(560.0, 300.0 + 30.0 * l)
 			fx.ring(c, col, r, 0.7)
 			fx.glow_pop(c, col, r * 0.9, 0.5)
-			fx.burst(c, col, 26, r, 0.8, 0.3)
-			fx.shake(6.0 + l)
+			fx.burst(c, col, 26, r, 0.8, 0 (0.3)
 			Sound.play_sfx("cast_pulse", -2.0)
 			var hits := 0
 			for e in enemies_near(c, r):
@@ -154,6 +168,17 @@ func kill_enemy(e: Node2D) -> void:
 		fx.flash(Color(1.0, 0.95, 0.7), 0.2)
 		Sound.play_sfx("unlock", -2.0)
 
+## Phase B: hit-stop + layered death burst on heavy kills (elite, boss, bearer).
+func _boss_down(e: Node2D) -> void:
+	super._boss_down(e)
+	fx.hitstop(0.09, 0.25)
+	fx.death_burst(e.position, Color(1.0, 0.85, 0.4), true)
+
+func _elite_loot(pos: Vector2) -> void:
+	super._elite_loot(pos)
+	fx.death_burst(pos, Color(1.0, 0.7, 0.3), false)
+	fx.hitstop(0.05, 0.35)
+
 # ───────── object pooling ─────────
 
 func _pooled_proj() -> Node2D:
@@ -198,6 +223,11 @@ func _return_pickup(p: Node2D) -> void:
 	else:
 		p.queue_free()
 
+## Phase B: muzzle telegraph where hostile shots originate, so volleys are readable.
+func _boss_shot(from: Vector2, target: Vector2, dmg: float, speed: float, spread: float) -> Node2D:
+	fx.muzzle_telegraph(from, Color(1.0, 0.4, 0.35))
+	return super._boss_shot(from, target, dmg, speed, spread)
+
 func _fire(from: Vector2, target: Vector2, dmg: float, el: String, speed: float = 520.0, pierce: int = 0, spread: float = 0.0) -> void:
 	var p: Node2D = _pooled_proj()
 	var dir = (target - from).normalized().rotated(spread)
@@ -210,19 +240,6 @@ func _fire(from: Vector2, target: Vector2, dmg: float, el: String, speed: float 
 	p.aid = _cur_aid
 	p.rotation = dir.angle()
 	projs.append(p)
-
-func _boss_shot(from: Vector2, target: Vector2, dmg: float, speed: float, spread: float) -> Node2D:
-	var p: Node2D = _pooled_proj()
-	p.reconfigure(from, "res://assets/sprites/bolt.png", Color(1.0, 0.4, 0.35), 0.9)
-	var dir = (target - from).normalized().rotated(spread)
-	p.vel = dir * speed
-	p.dmg = dmg * (0.85 + 0.15 * diff)
-	p.hostile = true
-	p.life = 6.0
-	p.radius = 10.0
-	p.rotation = dir.angle()
-	projs.append(p)
-	return p
 
 func _drop(kind: String, pos: Vector2, v: float, ref: String = "", color: Color = Color.WHITE) -> void:
 	if pickups.size() > 260 and kind == "frag":
