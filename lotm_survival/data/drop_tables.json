@@ -1,0 +1,83 @@
+{
+ "version": 1,
+ "pool": "global",
+ "note": "One pool for every pathway. Enemies reference rarity rolls, never specific items.",
+ "mean_seconds": {
+  "charm_common": 180,
+  "charm_uncommon": 480,
+  "artifact_rare": 1200
+ },
+ "sources": {
+  "common": {
+   "coin_chance": 0.3,
+   "heart_chance": 0.012,
+   "reagent_chance": 0.012,
+   "reagent_tiers": {
+    "Common": 1.0
+   }
+  },
+  "elite": {
+   "charm_chance": 0.35,
+   "charm_tiers": {
+    "Uncommon": 0.8,
+    "Rare": 0.2
+   },
+   "first_seen_artifact_chance": 0.35,
+   "artifact_tiers": {
+    "Common": 0.3,
+    "Uncommon": 0.45,
+    "Rare": 0.25
+   },
+   "reagent_count": [
+    1,
+    2
+   ],
+   "reagent_tiers": {
+    "Common": 1.0
+   },
+   "characteristic_chance": 0.0015,
+   "formula_chance": 0.22
+  },
+  "boss_gate": {
+   "artifact_tiers": {
+    "Rare": 1.0
+   },
+   "formula": "next",
+   "reagents": 2
+  },
+  "final_boss": {
+   "characteristic": 1,
+   "artifact_tiers": {
+    "Epic": 1.0
+   }
+  },
+  "altar": {
+   "rare_reagent_cost": 60,
+   "epic_artifact_cost": 300,
+   "interval": 240,
+   "lifetime": 100
+  },
+  "auction": {
+   "tiers": [
+    "Common",
+    "Uncommon",
+    "Rare",
+    "Epic"
+   ]
+  },
+  "codex": {
+   "milestones": [
+    2,
+    4,
+    6
+   ]
+  }
+ },
+ "duplicate_coins": {
+  "Common": 40,
+  "Uncommon": 90,
+  "Rare": 200,
+  "Epic": 500,
+  "Mythic": 1200
+ }
+}

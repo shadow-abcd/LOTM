@@ -1,0 +1,399 @@
+extends "res://scripts/run/run.gd"
+## Combat depth + performance + VFX-polish + rites + progression layer for the
+## descent. Extends the battle-tested loop without touching it: signature pathway
+## abilities, potions establishing the signature at run start, roaming Formula
+## bearers, object pooling, Phase B combat polish, Phase D-1 Sequence Rites, and
+## Phase D-2 Pathway Mastery (permanent per-pathway bonuses) + Ascended descents.
+
+const FxPolishS = preload("res://scripts/run/fx_polish.gd")
+const RiteBoons = preload("res://scripts/run/rite_boons.gd")
+
+const SIGNATURE_KINDS := ["flame_wave", "starfall", "mirror_world"]
+## Plain Sequence advances (no Formula gate, no boss) — these offer a Rite.
+const RITE_SEQS := [8, 7, 5, 4, 3]
+
+var bearer_t := 95.0
+var _proj_pool: Array = []
+var _pickup_pool: Array = []
+var _last_seq := 9
+var _rite_open := false
+var ascended := false
+
+func _ready() -> void:
+	super._ready()
+	# Phase B: swap in the polished FX layer (hit-stop, death bursts, telegraphs).
+	if fx != null and fx is FxPolishS:
+		pass
+	else:
+		var old_fx = fx
+		remove_child(old_fx)
+		old_fx.queue_free()
+		var new_fx: Node2D = FxPolishS.new()
+		new_fx.run = self
+		new_fx.z_index = 20
+		add_child(new_fx)
+		fx = new_fx
+	_apply_progression()
+	_connect_potion_abilities()
+
+# ───────── Phase D-2: Mastery + Ascended ─────────
+
+## Applies permanent Mastery bonuses for this pathway and consumes the Ascended
+## flag (set by the Pathways screen) for a tougher, richer descent.
+func _apply_progression() -> void:
+	# Mastery: +2% ability damage (Sequence-5 track), +5% Coins (5,000 kills),
+	# +10% maximum vitality (victory track) — permanent once earned.
+	stats["dmg"] = float(stats.get("dmg", 1.0)) + Store.mastery_dmg_bonus(pid)
+	stats["coin"] = float(stats.get("coin", 1.0)) + Store.mastery_coin_bonus(pid)
+	if Store.mastery_win(pid):
+		player.max_hp = roundf(player.max_hp * 1.10)
+		player.hp = player.max_hp
+	# Ascended: consume the launch flag placed by the Pathways screen.
+	if bool(Store.d.get("pending_ascended", false)):
+		Store.d["pending_ascended"] = false
+		Store.commit()
+		ascended = true
+		rite_dmg += 0.10
+		hud.announce("ASCENDED DESCENT", "The Place remembers more than it should.")
+		Sound.play_sfx("telegraph", -4.0)
+		fx.flash(Color(0.7, 0.3, 0.3), 0.3)
+
+# ───────── signature pathway abilities ─────────
+
+func _signature_ability() -> Dictionary:
+	for s in DB.abilities_of(pid):
+		if str(s["kind"]) in SIGNATURE_KINDS:
+			return s
+	return {}
+
+## Potion establishment: every potion brewed on this pathway stirs the pathway's
+## signature ability at descent start. 1 potion = Lv 1, 2 = Lv 2, 3+ = Lv 3.
+func _connect_potion_abilities() -> void:
+	var brewed := 0
+	for key in Store.d["potions"]:
+		var f: Dictionary = DB.formula(str(key))
+		if not f.is_empty() and str(f.get("pathway", "")) == pid:
+			brewed += 1
+	if brewed <= 0:
+		return
+	var sig := _signature_ability()
+	if sig.is_empty():
+		return
+	add_ability(sig, false)
+	for a in abilities:
+		if str(a["id"]) == str(sig["id"]):
+			a["level"] = mini(3, brewed)
+			break
+	hud.toast("%s answers your potions." % str(sig["name"]), "potion")
+	Sound.play_sfx("potion_done", -6.0)
+
+func _has_target(a: Dictionary) -> bool:
+	if str(a["kind"]) in SIGNATURE_KINDS:
+		return nearest(player_center(), 560.0) != null
+	return super._has_target(a)
+
+func cast(a: Dictionary) -> void:
+	if str(a["kind"]) in SIGNATURE_KINDS:
+		_cast_signature(a)
+	else:
+		super.cast(a)
+
+func _cast_signature(a: Dictionary) -> void:
+	cast_count += 1
+	_cur_aid = str(a["id"])
+	_ab_add(_cur_aid, "casts", 1)
+	var l := int(a["level"])
+	var dmg := ability_damage(a)
+	var el: String = a["element"]
+	var col: Color = DB.ELEMENT_COLORS.get(el, Color.WHITE)
+	var c := player_center()
+	if quill_charges > 0:
+		dmg *= 2.0
+		quill_charges -= 1
+	wake_near(c)
+	match str(a["kind"]):
+		"flame_wave":
+			var r := minf(560.0, 300.0 + 30.0 * l)
+			fx.ring(c, col, r, 0.7)
+			fx.glow_pop(c, col, r * 0.9, 0.5)
+			fx.burst(c, col, 26, r, 0.8, 0.3)
+			Sound.play_sfx("cast_pulse", -2.0)
+			var hits := 0
+			for e in enemies_near(c, r):
+				damage_enemy(e, dmg, el, "pulse")
+				hits += 1
+			if hits > 0:
+				var heal := 2.0 * minf(hits, 8)
+				player.hp = minf(player.max_hp, player.hp + heal)
+				fx.number(player.position + Vector2(0, -30), heal, Color(0.5, 1.0, 0.6))
+		"starfall":
+			var n := 4 + l
+			for i in n:
+				var ang := TAU * float(i) / float(n) + time
+				var at := c + Vector2.from_angle(ang) * randf_range(120.0, 320.0)
+				get_tree().create_timer(0.1 + 0.12 * float(i)).timeout.connect(_starfall_strike.bind(at, dmg, el, _cur_aid))
+		"mirror_world":
+			var r := minf(520.0, 320.0 + 20.0 * l)
+			fx.ring(c, col, r, 0.8)
+			fx.flash(Color(0.45, 0.3, 0.7), 0.25)
+			Sound.play_sfx("cast_aura", -4.0)
+			for e in enemies_near(c, r):
+				e.frozen = 1.2 + 0.2 * l
+				e.set_marked(time + 6.0)
+				damage_enemy(e, dmg, el, "sleep")
+			if stored_wound > 0.0:
+				var boom := stored_wound
+				stored_wound = 0.0
+				fx.ring(c, Color(0.7, 0.4, 1.0), r, 0.5)
+				fx.shake(8.0)
+				for e in enemies_near(c, r):
+					damage_enemy(e, boom * 2.0, "gloom", "wound")
+	_cur_aid = ""
+
+func _starfall_strike(at: Vector2, dmg: float, el: String, aid: String) -> void:
+	if over:
+		return
+	_cur_aid = aid
+	var col: Color = DB.ELEMENT_COLORS.get(el, Color.WHITE)
+	fx.burst(at, col, 10, 180.0, 0.4, 0.25)
+	fx.glow_pop(at, col, 95.0, 0.25)
+	Sound.play_sfx("boss_hit", -10.0, 1.8)
+	for e in enemies_near(at, 95.0):
+		damage_enemy(e, dmg, el, "sigil")
+	_cur_aid = ""
+
+# ───────── Formula bearers ─────────
+
+func _timers(delta: float) -> void:
+	super._timers(delta)
+	bearer_t -= delta
+	if bearer_t <= 0.0 and boss == null and not over:
+		bearer_t = 95.0
+		_spawn_formula_bearer()
+	_check_rite()
+
+## Phase D: watch for a plain (non-gate) Sequence advance and offer a Rite.
+## Gate advances (Sequences 6, 2, 1) spawn their boss as before — no rite there.
+## Sequence 5 arrival also stamps the permanent Mastery seq5 track.
+func _check_rite() -> void:
+	if seq < _last_seq:
+		if seq <= 5:
+			Store.record_mastery_seq5(pid)
+		var was_plain: bool = seq in RITE_SEQS
+		_last_seq = seq
+		if was_plain and not over and not draft_open and not _rite_open:
+			_open_rite()
+	elif seq > _last_seq:
+		_last_seq = seq
+
+func _open_rite() -> void:
+	_rite_open = true
+	get_tree().paused = true
+	Sound.play_sfx("gate_open", -4.0)
+	var panel := Control.new()
+	panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.name = "RitePanel"
+	var dim := ColorRect.new()
+	dim.color = Color(0.03, 0.02, 0.05, 0.78)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(center)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	center.add_child(box)
+	box.add_child(UI.label("Sequence %d Rite" % seq, 24, UI.GOLD, true))
+	box.add_child(UI.wrap_label("The Pathway stirs. Choose one boon for the rest of this descent.", 16, UI.TEXT_DIM))
+	for opt in RiteBoons.options_for(pid, 3):
+		var b := Button.new()
+		b.text = " %s — %s" % [str(opt["name"]), str(opt["desc"])]
+		b.custom_minimum_size = Vector2(560, 58)
+		b.pressed.connect(_choose_rite.bind(panel, str(opt["id"]), str(opt["name"])))
+		box.add_child(b)
+	hud.add_child(panel)
+
+func _choose_rite(panel: Control, id: String, name: String) -> void:
+	RiteBoons.apply(self, id)
+	Sound.play_sfx("equip")
+	hud.toast("Rite accepted: %s" % name, "scroll")
+	panel.queue_free()
+	_rite_open = false
+	get_tree().paused = false
+	fx.flash(Color(1.0, 0.9, 0.6), 0.25)
+	fx.ring(player_center(), Color(1.0, 0.9, 0.6), 380.0, 0.7)
+
+func _spawn_formula_bearer() -> void:
+	var left: Array = Store.undiscovered_formulas(pid)
+	if left.is_empty():
+		return
+	var e := spawn_enemy("grafter", _ring_pos(), false)
+	e.make_elite()
+	e.set_meta("formula_bearer", true)
+	var badge := Sprite2D.new()
+	badge.texture = UI.icon("scroll")
+	badge.modulate = Color(1.0, 0.9, 0.5)
+	badge.scale = Vector2(0.35, 0.35)
+	badge.position = Vector2(0, -e.radius * 3.6 - 8.0)
+	e.add_child(badge)
+	hud.toast("A Formula bearer crosses the field — strike it down to claim its secret.", "scroll")
+	Sound.play_sfx("telegraph", -8.0)
+	fx.ring(e.position, Color(1.0, 0.9, 0.5), 140.0, 0.6)
+
+func kill_enemy(e: Node2D) -> void:
+	var was_bearer: bool = e.has_meta("formula_bearer")
+	super.kill_enemy(e)
+	if was_bearer:
+		_find_formula(-1)
+		hud.toast("The bearer's note dissolves into knowledge.", "scroll")
+		fx.flash(Color(1.0, 0.95, 0.7), 0.2)
+		Sound.play_sfx("unlock", -2.0)
+
+## Phase B: hit-stop + layered death burst on heavy kills (elite, boss, bearer).
+## Phase D-2: Ascended bosses drop an extra Characteristic.
+func _boss_down(e: Node2D) -> void:
+	super._boss_down(e)
+	fx.hitstop(0.09, 0.25)
+	fx.death_burst(e.position, Color(1.0, 0.85, 0.4), true)
+	if ascended:
+		give_characteristic()
+
+func _elite_loot(pos: Vector2) -> void:
+	super._elite_loot(pos)
+	fx.death_burst(pos, Color(1.0, 0.7, 0.3), false)
+	fx.hitstop(0.05, 0.35)
+
+# ───────── Phase D-2: Ascended enemy scaling + rewards ─────────
+
+## Ascended: every enemy is +40% health and +20% damage. Bosses already get the
+## extra Characteristic in _boss_down; reagents double in _drop_reagent.
+func spawn_enemy(id: String, pos: Vector2, elite: bool) -> Node2D:
+	var e: Node2D = super.spawn_enemy(id, pos, elite)
+	if ascended and e != null:
+		e.max_hp = roundf(e.max_hp * 1.4)
+		e.hp = e.max_hp
+		e.dmg = roundf(e.dmg * 1.2)
+	return e
+
+## Ascended: reagents drop twice — the risk pays double.
+func _drop_reagent(pos: Vector2, tiers: Dictionary) -> void:
+	super._drop_reagent(pos, tiers)
+	if ascended:
+		super._drop_reagent(pos + Vector2(randf_range(-24, 24), randf_range(-24, 24)), tiers)
+
+## Phase D-2: record Mastery kills/wins and Ascended results when a run ends.
+func _end(won: bool) -> void:
+	super._end(won)
+	Store.record_mastery_kills(pid, kills)
+	if won:
+		Store.record_mastery_win(pid)
+	if ascended:
+		Store.record_ascended_run(won, 0 if won else seq)
+
+# ───────── object pooling ─────────
+
+func _pooled_proj() -> Node2D:
+	while not _proj_pool.is_empty():
+		var p: Node2D = _proj_pool.pop_back()
+		if is_instance_valid(p):
+			if not p.is_inside_tree():
+				add_child(p)
+			return p
+	var fresh: Node2D = ProjS.new()
+	add_child(fresh)
+	return fresh
+
+func _return_proj(p: Node2D) -> void:
+	if not is_instance_valid(p):
+		return
+	if p.is_inside_tree():
+		remove_child(p)
+	if _proj_pool.size() < 90:
+		_proj_pool.append(p)
+	else:
+		p.queue_free()
+
+func _pooled_pickup() -> Node2D:
+	while not _pickup_pool.is_empty():
+		var p: Node2D = _pickup_pool.pop_back()
+		if is_instance_valid(p):
+			if not p.is_inside_tree():
+				add_child(p)
+			return p
+	var fresh: Node2D = PickupS.new()
+	add_child(fresh)
+	return fresh
+
+func _return_pickup(p: Node2D) -> void:
+	if not is_instance_valid(p):
+		return
+	if p.is_inside_tree():
+		remove_child(p)
+	if _pickup_pool.size() < 260:
+		_pickup_pool.append(p)
+	else:
+		p.queue_free()
+
+## Phase B: muzzle telegraph where hostile shots originate, so volleys are readable.
+func _boss_shot(from: Vector2, target: Vector2, dmg: float, speed: float, spread: float) -> Node2D:
+	fx.muzzle_telegraph(from, Color(1.0, 0.4, 0.35))
+	return super._boss_shot(from, target, dmg, speed, spread)
+
+func _fire(from: Vector2, target: Vector2, dmg: float, el: String, speed: float = 520.0, pierce: int = 0, spread: float = 0.0) -> void:
+	var p: Node2D = _pooled_proj()
+	var dir = (target - from).normalized().rotated(spread)
+	p.reconfigure(from, "res://assets/sprites/bolt.png", DB.ELEMENT_COLORS.get(el, Color.WHITE), 0.7)
+	p.vel = dir * speed
+	p.dmg = dmg
+	p.pierce = pierce
+	p.life = 1.6
+	p.element = el
+	p.aid = _cur_aid
+	p.rotation = dir.angle()
+	projs.append(p)
+
+func _drop(kind: String, pos: Vector2, v: float, ref: String = "", color: Color = Color.WHITE) -> void:
+	if pickups.size() > 260 and kind == "frag":
+		insight_gain(v)
+		return
+	var p: Node2D = _pooled_pickup()
+	p.reconfigure(pos, kind, v, ref, color)
+	pickups.append(p)
+
+func _projectiles(delta: float) -> void:
+	for p in projs.duplicate():
+		if not is_instance_valid(p) or not p.tick(delta, self):
+			projs.erase(p)
+			if is_instance_valid(p):
+				_return_proj(p)
+
+func _pickups(delta: float) -> void:
+	for p in pickups.duplicate():
+		if not p.tick(delta, self):
+			pickups.erase(p)
+			_return_pickup(p)
+
+# ───────── performance: capped spawning ─────────
+
+func _spawn(delta: float) -> void:
+	var cap = Cfg.enemy_cap()
+	spawn_t -= delta
+	elite_t -= delta
+	unique_t -= delta
+	var boss_factor = 0.5 if boss != null else 1.0
+	if spawn_t <= 0.0 and enemies.size() < cap:
+		var interval = maxf(0.14, 0.95 - time / 200.0 - (9 - seq) * 0.045) / (diff * boss_factor)
+		spawn_t = interval
+		var n = 1 + int(time / 90.0) + int((9 - seq) / 3)
+		for i in n:
+			spawn_enemy(_pick_type(), _ring_pos(), false)
+	if elite_t <= 0.0:
+		# Ascended: elites arrive twice as often.
+		elite_t = (48.0 - minf(18.0, float(9 - seq) * 3.0)) * (0.5 if ascended else 1.0)
+		spawn_enemy(_pick_type(), _ring_pos(), true)
+		hud.toast("An elite carries something sealed.", "crown")
+		Sound.play_sfx("telegraph", -6.0)
+	if unique_t <= 0.0:
+		unique_t = 42.0
+		_spawn_unique()

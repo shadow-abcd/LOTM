@@ -1,0 +1,100 @@
+[
+ {
+  "id": "warmth",
+  "name": "Ember Offering",
+  "cost": {
+   "candle": 2
+  },
+  "effect": "+20 starting vitality on your next descent.",
+  "glyph": "flame"
+ },
+ {
+  "id": "clarity",
+  "name": "Circle of Clarity",
+  "cost": {
+   "salt": 2
+  },
+  "effect": "+1 Fate reroll on your next descent.",
+  "glyph": "orbit"
+ },
+ {
+  "id": "insight",
+  "name": "A Silver Reading",
+  "cost": {
+   "coin": 1
+  },
+  "effect": "+10% Insight on your next descent.",
+  "glyph": "eye"
+ },
+ {
+  "id": "iron_vow",
+  "name": "The Iron Vow",
+  "cost": {
+   "nail": 2
+  },
+  "effect": "+10 maximum vitality on your next descent.",
+  "glyph": "shield"
+ },
+ {
+  "id": "owl_sight",
+  "name": "The Owl's Reading",
+  "cost": {
+   "feather": 1
+  },
+  "effect": "+15% fragment reach on your next descent.",
+  "glyph": "eye"
+ },
+ {
+  "id": "moon_offering",
+  "name": "A Moonlit Offering",
+  "cost": {
+   "moonstone": 1
+  },
+  "effect": "+20% Insight on your next descent.",
+  "glyph": "moon"
+ },
+ {
+  "id": "blood_oath",
+  "name": "The Named Oath",
+  "cost": {
+   "blood": 1,
+   "cloth": 1
+  },
+  "effect": "+10% ability damage on your next descent.",
+  "glyph": "heart"
+ },
+ {
+  "id": "unbound_page",
+  "name": "Rite of the Unbound Page",
+  "cost": {
+   "ink": 1,
+   "candle": 1
+  },
+  "effect": "Discover the Sealed Notebook, a permanent discovery journal.",
+  "glyph": "book"
+ },
+ {
+  "id": "borrowed_essence",
+  "name": "An Essence, Borrowed",
+  "cost": {
+   "moonstone": 2,
+   "blood": 2,
+   "ink": 2
+  },
+  "effect": "Receive one Beyonder Characteristic for the Cabinet.",
+  "glyph": "gem"
+ },
+ {
+  "id": "sequential_inferer",
+  "name": "Sequential Inferer",
+  "cost": {
+   "cloth": 1,
+   "coin": 1,
+   "feather": 1
+  },
+  "costCoins": 1000,
+  "effect": "Reveal one random Formula you have not yet discovered.",
+  "glyph": "eye",
+  "special": true
+ }
+]

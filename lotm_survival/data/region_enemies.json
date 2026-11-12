@@ -1,0 +1,201 @@
+[
+ {
+  "id": "standing_ash",
+  "name": "The Standing Ash",
+  "place": "cinder_wold",
+  "line": "A tree that was a soldier, and is still standing to attention.",
+  "element": "ember",
+  "resist": [
+   "steel"
+  ],
+  "weak": [
+   "ember",
+   "storm",
+   "venom"
+  ],
+  "behaviour": "sound",
+  "detail": "Does not move. Any Art fired within 160 px wakes it. Awake, it walks at 60 px/s with its arms out.",
+  "silhouette": "Tall, narrow, one branch that is an arm. 96 x 96. Passes at 32 px black-fill.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6
+  },
+  "death": "Collapses inward, vertically, into a heap of grey lines. No fire.",
+  "dropsFormula": true,
+  "shape": "wraith",
+  "radius": 18,
+  "health": 120,
+  "speed": 60,
+  "damage": 16,
+  "xp": 6,
+  "color": "#9a958c"
+ },
+ {
+  "id": "slow_ascender",
+  "name": "The Slow Ascender",
+  "place": "drowned_stair",
+  "line": "A figure climbing the stair that never arrives.",
+  "element": "rime",
+  "resist": [
+   "rime"
+  ],
+  "weak": [
+   "ember",
+   "storm",
+   "venom"
+  ],
+  "behaviour": "ascend",
+  "detail": "Moves upward on the screen at 30 px/s and cannot be pushed down. If it reaches the top edge it becomes a mini-boss with 8x HP and does not despawn.",
+  "silhouette": "Climbing posture, one hand above the head. 96 x 96. Never drawn with a face.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6
+  },
+  "death": "It lets go. Falls the whole way down, and does not splash.",
+  "dropsFormula": true,
+  "shape": "wraith",
+  "radius": 17,
+  "health": 95,
+  "speed": 30,
+  "damage": 15,
+  "xp": 6,
+  "color": "#7f97a6"
+ },
+ {
+  "id": "reciting_choir",
+  "name": "The Reciting Choir",
+  "place": "salt_seminary",
+  "line": "Five salt figures who must be killed in a specific order.",
+  "element": "gloom",
+  "resist": [
+   "gloom"
+  ],
+  "weak": [
+   "steel",
+   "ember",
+   "storm"
+  ],
+  "behaviour": "order",
+  "detail": "Five bodies, one shared health bar. Killing them out of the displayed order resummons all five at full health. The order is shown as a small mark on each body's chest.",
+  "silhouette": "Identical bodies, differentiated only by the chest notch count. 96 x 96. Documented exception to the silhouette gate: this one is read by marking, not outline.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6
+  },
+  "death": "Each one cracks and pours; the last one falls silently.",
+  "dropsFormula": true,
+  "shape": "wraith",
+  "radius": 16,
+  "health": 70,
+  "speed": 24,
+  "damage": 13,
+  "xp": 5,
+  "color": "#b7b3a6"
+ },
+ {
+  "id": "reflection_that_stays",
+  "name": "The Reflection That Stays",
+  "place": "glass_verge",
+  "line": "It copies your last three seconds of movement and then it does not stop.",
+  "element": "venom",
+  "resist": [
+   "venom"
+  ],
+  "weak": [
+   "steel",
+   "storm",
+   "radiance"
+  ],
+  "behaviour": "mimic",
+  "detail": "Mimics the player's movement path on a 3-second delay, then continues past the end of that path on its own. Grows 1% in size per second it survives.",
+  "silhouette": "The player's own base rig, palette-shifted to VENOM shadow, no core light.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6
+  },
+  "death": "Shatters, and each shard teleports 40 px outward before fading.",
+  "dropsFormula": true,
+  "shape": "wraith",
+  "radius": 16,
+  "health": 105,
+  "speed": 60,
+  "damage": 14,
+  "xp": 6,
+  "color": "#8f9f7a"
+ },
+ {
+  "id": "grafter",
+  "name": "The Grafter",
+  "place": "slow_orchard",
+  "line": "It takes a cutting from you and grows it.",
+  "element": "venom",
+  "resist": [
+   "venom"
+  ],
+  "weak": [
+   "ember",
+   "storm",
+   "steel"
+  ],
+  "behaviour": "grafter",
+  "detail": "On a successful hit it copies one of the player's equipped Arts and grows a hostile copy of it. The copy fires every 4 seconds at 50% power. Killing the Grafter destroys all grown copies.",
+  "silhouette": "Tall, thin, one held blade for cutting, one hand permanently cupped for holding a cutting. 96 x 96.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6
+  },
+  "death": "Every copy it grew wilts and drops simultaneously.",
+  "dropsFormula": true,
+  "shape": "wraith",
+  "radius": 18,
+  "health": 130,
+  "speed": 44,
+  "damage": 17,
+  "xp": 7,
+  "color": "#8b9b63"
+ },
+ {
+  "id": "lamplighter",
+  "name": "The Lamplighter",
+  "place": "lantern_field",
+  "line": "It does not attack you. It attacks the field.",
+  "element": "radiance",
+  "resist": [
+   "radiance"
+  ],
+  "weak": [
+   "steel",
+   "storm",
+   "venom"
+  ],
+  "behaviour": "lamplighter",
+  "detail": "It walks to unlit lanterns and lights them. Each lit lantern spawns a swarm of 4. Killing it early is the entire skill check.",
+  "silhouette": "Tall, stooped, carrying a light on a stick held behind it. 96 x 96. The light must be the brightest point on the sprite.",
+  "frames": {
+   "idle": 4,
+   "move": 6,
+   "telegraph": 3,
+   "death": 6,
+   "light": 1
+  },
+  "death": "Its own lantern goes out first, then it falls.",
+  "dropsFormula": true,
+  "shape": "eye",
+  "radius": 20,
+  "health": 190,
+  "speed": 40,
+  "damage": 12,
+  "xp": 10,
+  "color": "#d8a96c"
+ }
+]

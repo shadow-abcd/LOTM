@@ -1,0 +1,16 @@
+[
+ {
+  "id": "field_work",
+  "name": "A quiet week's work",
+  "description": "Vanquish 50 enemies across completed descents.",
+  "reward": "2 Diamonds",
+  "glyph": "skull"
+ },
+ {
+  "id": "deep_descent",
+  "name": "Further into the veil",
+  "description": "Vanquish 150 enemies and reach Sequence 2 or deeper in one descent.",
+  "reward": "1 Characteristic",
+  "glyph": "gem"
+ }
+]

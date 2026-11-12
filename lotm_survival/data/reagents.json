@@ -1,0 +1,128 @@
+[
+ {
+  "id": "candle",
+  "name": "Candle",
+  "tier": "Common",
+  "glyph": "flame"
+ },
+ {
+  "id": "nail",
+  "name": "Iron Nail",
+  "tier": "Common",
+  "glyph": "zap"
+ },
+ {
+  "id": "salt",
+  "name": "Salt Circle",
+  "tier": "Common",
+  "glyph": "orbit"
+ },
+ {
+  "id": "dried_ember",
+  "name": "Dried Ember",
+  "tier": "Common",
+  "glyph": "flame"
+ },
+ {
+  "id": "graveyard_soil",
+  "name": "Graveyard Soil",
+  "tier": "Common",
+  "glyph": "moon"
+ },
+ {
+  "id": "willow",
+  "name": "Willow Branch",
+  "tier": "Common",
+  "glyph": "wind"
+ },
+ {
+  "id": "twine",
+  "name": "Hunter's Twine",
+  "tier": "Common",
+  "glyph": "thread"
+ },
+ {
+  "id": "battlefield_ash",
+  "name": "Ash of a Battlefield",
+  "tier": "Common",
+  "glyph": "flame"
+ },
+ {
+  "id": "silver_coin",
+  "name": "Silver Coin",
+  "tier": "Rare",
+  "glyph": "coins"
+ },
+ {
+  "id": "black_cloth",
+  "name": "Black Cloth",
+  "tier": "Rare",
+  "glyph": "moon"
+ },
+ {
+  "id": "feather",
+  "name": "Owl's Feather",
+  "tier": "Rare",
+  "glyph": "wind"
+ },
+ {
+  "id": "corpselight",
+  "name": "Corpselight",
+  "tier": "Rare",
+  "glyph": "gem"
+ },
+ {
+  "id": "war_medal",
+  "name": "War Medal",
+  "tier": "Rare",
+  "glyph": "shield"
+ },
+ {
+  "id": "blood_banner",
+  "name": "Blood-Stained Banner",
+  "tier": "Rare",
+  "glyph": "heart"
+ },
+ {
+  "id": "stormglass",
+  "name": "Stormglass",
+  "tier": "Rare",
+  "glyph": "gem"
+ },
+ {
+  "id": "crown_fragment",
+  "name": "Crown Fragment",
+  "tier": "Rare",
+  "glyph": "crown"
+ },
+ {
+  "id": "star_water",
+  "name": "Star Water",
+  "tier": "Rare",
+  "glyph": "star"
+ },
+ {
+  "id": "moonstone",
+  "name": "Moonstone",
+  "tier": "Exotic",
+  "glyph": "gem"
+ },
+ {
+  "id": "named_blood",
+  "name": "Named Blood",
+  "tier": "Exotic",
+  "glyph": "heart"
+ },
+ {
+  "id": "ink_of_oaths",
+  "name": "Ink of Oaths",
+  "tier": "Exotic",
+  "glyph": "scroll"
+ },
+ {
+  "id": "heart_of_pyre",
+  "name": "Heart of the Pyre",
+  "tier": "Exotic",
+  "glyph": "flame"
+ }
+]

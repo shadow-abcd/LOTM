@@ -1,0 +1,411 @@
+[
+ {
+  "id": "dawnbringer:8",
+  "pathway": "dawnbringer",
+  "target": 8,
+  "name": "Formula of Provocateur",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "salt": 1,
+    "candle": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Provocateur was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:7",
+  "pathway": "dawnbringer",
+  "target": 7,
+  "name": "Formula of Pyromaniac",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "salt": 1,
+    "nail": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Pyromaniac was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:6",
+  "pathway": "dawnbringer",
+  "target": 6,
+  "name": "Formula of Conspirer",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "salt": 2
+   },
+   "priceCoins": 0
+  },
+  "hint": "Stained in ash, hidden in a war council's ledger."
+ },
+ {
+  "id": "dawnbringer:5",
+  "pathway": "dawnbringer",
+  "target": 5,
+  "name": "Formula of Reaper",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "candle": 2,
+    "corpselight": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Reaper was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:4",
+  "pathway": "dawnbringer",
+  "target": 4,
+  "name": "Formula of Iron-Blooded Knight",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "nail": 1,
+    "candle": 1,
+    "war_medal": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Iron-Blooded Knight was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:3",
+  "pathway": "dawnbringer",
+  "target": 3,
+  "name": "Formula of War Bishop",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "salt": 1,
+    "battlefield_ash": 1,
+    "feather": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name War Bishop was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:2",
+  "pathway": "dawnbringer",
+  "target": 2,
+  "name": "Formula of Weather Warlock",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "war_medal": 2
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Weather Warlock was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:1",
+  "pathway": "dawnbringer",
+  "target": 1,
+  "name": "Formula of Hand of God",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "crown_fragment": 1,
+    "star_water": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Hand of God was last carried near a burned watchtower."
+ },
+ {
+  "id": "dawnbringer:0",
+  "pathway": "dawnbringer",
+  "target": 0,
+  "name": "Formula of Red Priest",
+  "recipe": {
+   "band": "Sequence 0",
+   "cost": {
+    "star_water": 3,
+    "heart_of_pyre": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Red Priest was last carried near a burned watchtower."
+ },
+ {
+  "id": "wanderer:8",
+  "pathway": "wanderer",
+  "target": 8,
+  "name": "Formula of Melee Scholar",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "candle": 1,
+    "salt": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Melee Scholar was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:7",
+  "pathway": "wanderer",
+  "target": 7,
+  "name": "Formula of Warlock",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "nail": 1,
+    "candle": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Warlock was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:6",
+  "pathway": "wanderer",
+  "target": 6,
+  "name": "Formula of Scrolls Professor",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "salt": 2
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Scrolls Professor was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:5",
+  "pathway": "wanderer",
+  "target": 5,
+  "name": "Formula of Constellations Master",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "candle": 2,
+    "corpselight": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Constellations Master was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:4",
+  "pathway": "wanderer",
+  "target": 4,
+  "name": "Formula of Mysticologist",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "nail": 1,
+    "graveyard_soil": 1,
+    "star_water": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Mysticologist was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:3",
+  "pathway": "wanderer",
+  "target": 3,
+  "name": "Formula of Clairvoyant",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "salt": 1,
+    "willow": 1,
+    "feather": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Clairvoyant was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:2",
+  "pathway": "wanderer",
+  "target": 2,
+  "name": "Formula of Sage",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "stormglass": 1,
+    "crown_fragment": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Sage was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:1",
+  "pathway": "wanderer",
+  "target": 1,
+  "name": "Formula of Knowledge Emperor",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "star_water": 1,
+    "feather": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Knowledge Emperor was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "wanderer:0",
+  "pathway": "wanderer",
+  "target": 0,
+  "name": "Formula of Hermit",
+  "recipe": {
+   "band": "Sequence 0",
+   "cost": {
+    "star_water": 2,
+    "corpselight": 1,
+    "ink_of_oaths": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Hermit was last carried near the sealed library beneath the observatory."
+ },
+ {
+  "id": "hollow_seer:8",
+  "pathway": "hollow_seer",
+  "target": 8,
+  "name": "Formula of Instigator",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "dried_ember": 1,
+    "twine": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Instigator was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:7",
+  "pathway": "hollow_seer",
+  "target": 7,
+  "name": "Formula of Witch",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "graveyard_soil": 1,
+    "dried_ember": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Witch was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:6",
+  "pathway": "hollow_seer",
+  "target": 6,
+  "name": "Formula of Pleasure",
+  "recipe": {
+   "band": "Sequence 8–6",
+   "cost": {
+    "salt": 2
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Pleasure was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:5",
+  "pathway": "hollow_seer",
+  "target": 5,
+  "name": "Formula of Affliction",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "twine": 2,
+    "black_cloth": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Affliction was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:4",
+  "pathway": "hollow_seer",
+  "target": 4,
+  "name": "Formula of Despair",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "dried_ember": 1,
+    "battlefield_ash": 1,
+    "stormglass": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Despair was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:3",
+  "pathway": "hollow_seer",
+  "target": 3,
+  "name": "Formula of Unaging",
+  "recipe": {
+   "band": "Sequence 5–3",
+   "cost": {
+    "graveyard_soil": 1,
+    "willow": 1,
+    "corpselight": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Unaging was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:2",
+  "pathway": "hollow_seer",
+  "target": 2,
+  "name": "Formula of Catastrophe",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "blood_banner": 1,
+    "stormglass": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Catastrophe was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:1",
+  "pathway": "hollow_seer",
+  "target": 1,
+  "name": "Formula of Apocalypse",
+  "recipe": {
+   "band": "Sequence 2–1",
+   "cost": {
+    "crown_fragment": 1,
+    "star_water": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Apocalypse was last carried near a shuttered mirror house."
+ },
+ {
+  "id": "hollow_seer:0",
+  "pathway": "hollow_seer",
+  "target": 0,
+  "name": "Formula of Demoness",
+  "recipe": {
+   "band": "Sequence 0",
+   "cost": {
+    "star_water": 2,
+    "war_medal": 1,
+    "named_blood": 1
+   },
+   "priceCoins": 0
+  },
+  "hint": "A note bearing the name Demoness was last carried near a shuttered mirror house."
+ }
+]

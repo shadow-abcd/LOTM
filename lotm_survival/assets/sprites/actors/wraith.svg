@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160">
+  <defs><linearGradient id="shroud" x2="0" y2="1"><stop stop-color="#879a8c" stop-opacity=".9"/><stop offset="1" stop-color="#21332b" stop-opacity=".25"/></linearGradient></defs>
+  <path d="M50 9C26 9 20 27 22 48L10 75l9 2-5 31 12-9-2 41 15-13 10 24 10-24 15 13-2-41 12 9-5-31 9-2-12-27C80 27 74 9 50 9Z" fill="url(#shroud)" stroke="#9caf9e" stroke-opacity=".6" stroke-width="1.5"/>
+  <path d="M32 43c0-17 8-25 18-25s18 8 18 25c0 16-9 25-18 29-9-4-18-13-18-29Z" fill="#1c2a23"/>
+  <path d="M39 43h5m12 0h5" stroke="#d7c9a5" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 89c7 5 21 5 28 0M32 105c9 7 27 7 36 0" fill="none" stroke="#b0c0ad" stroke-opacity=".3"/>
+</svg>
