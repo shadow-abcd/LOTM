@@ -56,8 +56,8 @@ func _ready() -> void:
 		v.add_child(UI.wrap_label("Reagents: " + rg, 15, UI.TEXT_DIM))
 	if run.star_gains.size() > 0:
 		var sg = ""
-		for g in run.star_gains:
-			sg += "%s ★%d → ★%d   " % [g["name"], int(g["from"]), int(g["to"])]
+		for st in run.star_gains:
+			sg += "%s ★%d → ★%d   " % [st["name"], int(st["from"]), int(st["to"])]
 		v.add_child(UI.wrap_label("New Stars: " + sg, 16, UI.GOLD))
 	if run.items_found.size() > 0:
 		v.add_child(UI.wrap_label("Vault: " + ", ".join(PackedStringArray(run.items_found)), 15, UI.GOOD))

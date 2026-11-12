@@ -38,7 +38,7 @@ func setup(pid: String, accent: Color) -> void:
 	add_child(_vp)
 	_root3d = Node3D.new()
 	_vp.add_child(_root3d)
-	var cam := PerspectiveCamera3D.new()
+	var cam := Camera3D.new()
 	cam.fov = 32.0
 	cam.position = Vector3(0.0, 1.55, 3.6)
 	_root3d.add_child(cam)
@@ -219,9 +219,10 @@ func _cap(r: float, h: float) -> CapsuleMesh:
 	m.height = h
 	return m
 
-func _cone(r: float, h: float) -> ConeMesh:
-	var m := ConeMesh.new()
-	m.radius = r
+func _cone(r: float, h: float) -> CylinderMesh:
+	var m := CylinderMesh.new()
+	m.top_radius = 0.0
+	m.bottom_radius = r
 	m.height = h
 	return m
 

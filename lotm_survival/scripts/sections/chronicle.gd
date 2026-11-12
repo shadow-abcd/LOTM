@@ -69,7 +69,7 @@ func build() -> void:
 		var v = VBoxContainer.new()
 		v.add_theme_constant_override("separation", 6)
 		for opt in beat["options"]:
-			var b = UI.button("  " + str(opt["text"]), "check", _choose.bind(beat_id, opt), false)
+			var b = UI.button("  " + str(opt["text"]), "check", _choose.bind(beat_id, opt), Vector2.ZERO)
 			b.custom_minimum_size = Vector2(0, 48)
 			v.add_child(b)
 		body.add_child(v)

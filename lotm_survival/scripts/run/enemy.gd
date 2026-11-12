@@ -91,7 +91,7 @@ func make_elite() -> void:
 	elite_sprite.modulate = Color(1.0, 0.86, 0.45)
 	elite_sprite.scale = Vector2(0.4, 0.4)
 	elite_sprite.position = Vector2(0, -radius * 3.6 - 14.0)
-	var m = CanvasItemMaterial()
+	var m = CanvasItemMaterial.new()
 	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	elite_sprite.material = m
 	add_child(elite_sprite)
@@ -120,7 +120,7 @@ func set_marked(until: float) -> void:
 		mark_sprite.modulate = Color(1.0, 0.45, 0.3, 0.85)
 		mark_sprite.scale = Vector2(0.3, 0.3)
 		mark_sprite.position = Vector2(0, -6)
-		var m = CanvasItemMaterial()
+		var m = CanvasItemMaterial.new()
 		m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 		mark_sprite.material = m
 		add_child(mark_sprite)

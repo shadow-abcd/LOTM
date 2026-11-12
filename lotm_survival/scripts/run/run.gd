@@ -63,7 +63,7 @@ var pickup_radius = 90.0
 var enemy_speed_mult = 1.0
 var cd_mult = 1.0
 
-var time = 0.0
+var time: float = 0.0
 var level = 1
 var insight = 0.0
 var need = 13.0
@@ -76,7 +76,7 @@ var rerolls = 1
 var hunt_stacks = 0
 var hunt_t = 0.0
 var cast_count = 0
-var stored_wound = 0.0
+var stored_wound: float = 0.0
 var quill_charges = 0
 var quill_cd = 0.0
 var dmg_taken_mult = 1.0

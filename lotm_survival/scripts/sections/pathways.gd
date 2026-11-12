@@ -52,7 +52,7 @@ func build() -> void:
 		h.add_child(lb)
 		h.add_child(UI.button(" Ascend and Descend", "flame", _start_ascended, Vector2(220, 48)))
 		body.add_child(h)
-		body.add_child(UI.wrap_label("The Place remembers more than it should: enemies are +40% stronger, elites come twice as often. Reagents drop double and every gate boss carries an extra Characteristic. Best Ascended depth: %s · Victories: %d" % ("Sequence %d" % best if best < 9 else "—", aw), 14, UI.TEXT_DIM))
+		body.add_child(UI.wrap_label("The Place remembers more than it should: enemies are +40% stronger, elites come twice as often. Reagents drop double and every gate boss carries an extra Characteristic. Best Ascended depth: %s · Victories: %d" % [(("Sequence %d" % best) if best < 9 else "—"), aw], 14, UI.TEXT_DIM))
 	else:
 		body.add_child(UI.wrap_label("Win a descent once (Sequence 1) to unlock Ascended Descents.", 14, UI.TEXT_DIM))
 	body.add_child(UI.wrap_label("Tip: Settings › Gameplay › Lift the Forbids opens every locked pathway.", 14, UI.TEXT_DIM))
