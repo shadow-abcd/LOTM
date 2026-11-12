@@ -1,0 +1,29 @@
+name: verify
+
+# The game must at least compile. A headless Godot 4.3 import is the only check
+# that proves every .gd file parses and every texture loads, so it gates the repo.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot 4.3
+        run: |
+          curl -sSL -o godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.3-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --headless --version
+
+      - name: Scripts parse (godot import)
+        working-directory: lotm_survival
+        run: ./tools/compile_check.sh ../godot
+
+      - name: Heuristic lint (UI/DB/Store/Sound/Cfg symbols, tabs, balance)
+        run: python3 lotm_survival/tools/check_gd.py lotm_survival/scripts
