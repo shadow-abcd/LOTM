@@ -1,4 +1,6 @@
 .godot/
 *.import
-export_presets.cfg
 *.tmp
+
+# export artifacts
+build/
